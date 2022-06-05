@@ -11,6 +11,17 @@ class AdminPolicy
     use HandlesAuthorization;
 
     /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\Admin  $admin
+     * @return void|bool
+     */
+    public function before(Admin $admin)
+    {
+        return $admin->isDeveloper();
+    }
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\Admin  $admin

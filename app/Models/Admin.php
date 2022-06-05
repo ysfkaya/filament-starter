@@ -77,8 +77,18 @@ class Admin extends Authenticatable implements FilamentUser
         });
     }
 
-    public function isSuper()
+    public function isSuper(): bool
     {
         return $this->hasAnyRole(self::superRoles());
+    }
+
+    public function isDeveloper(): bool
+    {
+        return $this->hasRole(self::developerRole());
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->hasRole(self::ownerRole());
     }
 }

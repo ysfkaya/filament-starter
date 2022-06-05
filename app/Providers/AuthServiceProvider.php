@@ -26,6 +26,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(fn ($user) => ! $user instanceof Admin ? null : ($user->isSuper() ? true : null));
+        Gate::before(function ($user, $ability, $args) {
+            $model = head($args);
+
+            // We do not allow full authorization for
+            // administrators even if they are super users.
+            // Instead we check in Policy.
+            if ($model instanceof Admin) {
+                return null;
+            }
+
+            return ! $user instanceof Admin ? null : ($user->isSuper() ? true : null);
+        });
     }
 }

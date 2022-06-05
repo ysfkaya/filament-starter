@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  deploy:
+    name: Deploy to prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.1
+          coverage: none
+          tools: composer:v2, deployer
+
+      - name: Add HTTP basic auth credentials
+        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+
+      - name: Install Deployer
+        run: composer install -n --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: Deploy
+        uses: deployphp/action@master
+        with:
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          known-hosts: ${{ secrets.KNOWN_HOSTS }}
+          ssh-config: ${{ secrets.SSH_CONFIG }}
+          dep: deploy

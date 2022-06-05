@@ -1,0 +1,52 @@
+#  TODO: Replace the variables inside the single parentheses accordingly.
+import:
+  - recipe/laravel.php
+  - contrib/php-fpm.php
+
+config:
+  application: "{site_name}"
+  repository: "git@github.com:{git_author}/{git_repo}.git"
+  php_fpm_version: "81"
+  bin/composer: "/opt/plesk/php/8.1/bin/php /usr/lib64/plesk-9.0/composer.phar"
+  bin/php: "/opt/plesk/php/8.1/bin/php"
+  shared_dirs: ["storage", "public/.well-known"]
+  writable_mode: "chmod"
+  writable_chmod_mode: "0777"
+  writable_dirs:
+    [
+      "public/.well-known",
+      "bootstrap/cache",
+      "storage",
+      "storage/app",
+      "storage/app/public",
+      "storage/framework",
+      "storage/framework/cache",
+      "storage/framework/sessions",
+      "storage/framework/views",
+      "storage/logs",
+    ]
+  keep_releases: 2
+
+hosts:
+  prod:
+    php_fpm_service: "plesk-php{{php_fpm_version}}-fastcgi"
+    remote_user: root
+    port: 55000
+    hostname: "{hostname}"
+    deploy_path: "/var/www/vhosts/{site_path}/httpdocs"
+
+tasks:
+  deploy:
+    - deploy:prepare
+    - deploy:vendors
+    - artisan:storage:link
+    - artisan:view:cache
+    - artisan:config:cache
+    - artisan:route:cache
+    - artisan:migrate
+    - deploy:publish
+
+after:
+  deploy:failed: deploy:unlock
+  deploy:success:
+    - artisan:queue:restart

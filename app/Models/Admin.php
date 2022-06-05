@@ -55,9 +55,19 @@ class Admin extends Authenticatable implements FilamentUser
     public static function superRoles(): array
     {
         return [
-            config('filament-shield.super_admin.role_name'),
-            config('filament-shield.filament_user.role_name'),
+            self::developerRole(),
+            self::ownerRole(),
         ];
+    }
+
+    public static function developerRole(): string|null
+    {
+        return config('filament-shield.super_admin.role_name');
+    }
+
+    public static function ownerRole(): string|null
+    {
+        return config('filament-shield.filament_user.role_name');
     }
 
     public function scopeWithoutSupers($builder)

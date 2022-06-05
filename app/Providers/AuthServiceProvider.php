@@ -26,6 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(fn ($user) => $user instanceof Admin ? $user->isSuper() : null);
+        Gate::before(fn ($user) => ! $user instanceof Admin ? null : ($user->isSuper() ? true : null));
     }
 }

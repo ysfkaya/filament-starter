@@ -5,10 +5,13 @@ namespace App\Filament\Pages\Settings;
 use App\Overrides\Filament\Forms\Components\SettingsMediaLibraryFileUpload;
 use App\Overrides\Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\TextInput;
 
 class General extends SettingsPage
 {
+    use HasPageShield;
+
     protected static ?string $navigationIcon = 'heroicon-o-sun';
 
     protected static ?string $navigationGroup = 'Settings';

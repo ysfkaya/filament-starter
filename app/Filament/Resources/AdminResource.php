@@ -3,12 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdminResource\Pages;
+use App\Filament\Resources\AdminResource\Pages\EditAdmin;
 use App\Models\Admin;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use STS\FilamentImpersonate\Impersonate;
 
 class AdminResource extends Resource
 {
@@ -24,13 +28,22 @@ class AdminResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->email()
+                    ->unique(ignoreRecord:true)
                     ->required()
+                    ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
-                    ->maxLength(255),
+                    ->required(fn () => ! (func_get_arg(2)) instanceof EditAdmin)
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => ! empty($state) ? Hash::make($state) : ''),
+
+                Forms\Components\BelongsToManyMultiSelect::make('roles')->rules([
+                    Rule::notIn(Admin::superRoles()),
+                ])
+                ->preload()
+                ->relationship('roles', 'name', fn ($query) => $query->whereNotIn('name', Admin::superRoles()))
+                ->label(__('Roles')),
             ]);
     }
 
@@ -40,10 +53,11 @@ class AdminResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\BadgeColumn::make('roles.name')->label(__('Roles')),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(),
+            ])
+            ->prependActions([
+                Impersonate::make('impersonate'),
             ])
             ->filters([
                 //

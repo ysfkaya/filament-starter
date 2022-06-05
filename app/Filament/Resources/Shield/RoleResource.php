@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Shield;
 
 use App\Filament\Resources\Shield\RoleResource\Pages;
+use App\Models\Admin;
 use Closure;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -23,18 +24,13 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = -1;
 
-    protected static ?string $slug = 'shield/roles';
+    protected static ?string $slug = 'roles';
 
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getEloquentQuery(): Builder
     {
-        $superAdminRoles = [
-            config('filament-shield.super_admin.role_name'),
-            config('filament-shield.filament_user.role_name'),
-        ];
-
-        return parent::getEloquentQuery()->whereNotIn('name', $superAdminRoles);
+        return parent::getEloquentQuery()->whereNotIn('name', Admin::superRoles());
     }
 
     public static function form(Form $form): Form
@@ -49,15 +45,10 @@ class RoleResource extends Resource
                                     ->label(__('filament-shield::filament-shield.field.name'))
                                     ->required()
                                     ->maxLength(255)
-                                    ->afterStateUpdated(fn (Closure $set, $state): string => $set('name', Str::lower($state)))
                                     ->columnSpan(2),
-                                Forms\Components\TextInput::make('guard_name')
-                                    ->label(__('filament-shield::filament-shield.field.guard_name'))
-                                    ->hidden()
-                                    ->default(config('filament.auth.guard'))
-                                    ->nullable()
-                                    ->maxLength(255)
-                                    ->afterStateUpdated(fn (Closure $set, $state): string => $set('guard_name', Str::lower($state))),
+
+                                Forms\Components\Hidden::make('guard_name')->default('admin')->required()->rules(['in:admin']),
+
                                 Forms\Components\Toggle::make('select_all')
                                     ->onIcon('heroicon-s-shield-check')
                                     ->offIcon('heroicon-s-shield-exclamation')

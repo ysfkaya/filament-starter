@@ -15,6 +15,12 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationGroup = 'Management';
+
+    protected static ?string $slug = 'management/users';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
@@ -25,15 +31,17 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->unique()
+                    ->unique(ignoreRecord:true)
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
+                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser)
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => ! empty($state) ? Hash::make($state) : ''),
+                    ->afterStateHydrated(fn ($component) => $component->state(null))
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->disableAutocomplete(),
             ]);
     }
 

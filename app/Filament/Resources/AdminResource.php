@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdminResource\Pages;
-use App\Filament\Resources\AdminResource\Pages\EditAdmin;
 use App\Models\Admin;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -17,6 +16,12 @@ use STS\FilamentImpersonate\Impersonate;
 class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationGroup = 'Management';
+
+    protected static ?string $slug = 'management/admins';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
@@ -34,9 +39,11 @@ class AdminResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(fn () => ! (func_get_arg(2)) instanceof EditAdmin)
+                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateAdmin)
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => ! empty($state) ? Hash::make($state) : ''),
+                    ->afterStateHydrated(fn ($component) => $component->state(null))
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->disableAutocomplete(),
 
                 Forms\Components\BelongsToManyMultiSelect::make('roles')->rules([
                     Rule::notIn(Admin::superRoles()),

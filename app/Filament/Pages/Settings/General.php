@@ -14,6 +14,8 @@ class General extends SettingsPage
 
     protected static ?string $navigationIcon = 'heroicon-o-sun';
 
+    protected static ?int $navigationSort = 4;
+
     protected static ?string $navigationGroup = 'Settings';
 
     protected static ?string $slug = 'settings/general';

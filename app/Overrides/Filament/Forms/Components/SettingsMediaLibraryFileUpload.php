@@ -25,7 +25,7 @@ class SettingsMediaLibraryFileUpload extends SpatieMediaLibraryFileUpload
         });
 
         $this->deleteUploadedFileUsing(static function (self $component, string $file): void {
-            if (! $file) {
+            if (!$file) {
                 return;
             }
 
@@ -37,7 +37,7 @@ class SettingsMediaLibraryFileUpload extends SpatieMediaLibraryFileUpload
         });
 
         $this->saveUploadedFileUsing(static function (self $component, TemporaryUploadedFile $file, ?Model $record): string {
-            if (! method_exists($record, 'addMediaFromString')) {
+            if (!method_exists($record, 'addMediaFromString')) {
                 return $file;
             }
 
@@ -46,54 +46,22 @@ class SettingsMediaLibraryFileUpload extends SpatieMediaLibraryFileUpload
 
             $filename = $component->getUploadedFileNameForStorage($file);
 
+            /** @var Media $media */
             $media = $mediaAdder
                 ->usingFileName($filename)
                 ->usingName($component->getMediaName($file) ?? pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                 ->withCustomProperties($component->getCustomProperties())
                 ->toMediaCollection($component->getCollection(), $component->getDiskName());
 
-            if ($component->getSettingsProperty() instanceof Image) {
-                $component->saveSetting(Image::fromMedia($media));
-            }
+            $component->saveSetting(Image::fromMedia($media));
 
             return $media->getAttributeValue('uuid');
         });
     }
 
-    public function getRecord(): ?Model
-    {
-        $settings = $this->getSettings();
-
-        $group = $settings::group();
-
-        return SettingsProperty::fetch($group, $this->name);
-    }
-
-    /**
-     * @return Settings
-     */
-    public function getSettings()
-    {
-        /** @var SettingsPage $component */
-        $component = $this->container->getLivewire();
-
-        $settingsClass = $component::getSettings();
-
-        return app($settingsClass);
-    }
-
-    public function getSettingsProperty()
-    {
-        $settings = $this->getSettings();
-
-        return $settings->{$this->name};
-    }
-
     public function saveSetting($value)
     {
-        $settings = $this->getSettings();
-
-        $settings->fill([
+        setting([
             $this->name => $value,
         ])->save();
     }

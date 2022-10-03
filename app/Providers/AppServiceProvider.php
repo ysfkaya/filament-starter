@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        Model::preventLazyLoading(!$this->app->environment('production'));
+        Model::preventLazyLoading(! $this->app->environment('production'));
 
         $this->registerBladeDirectives();
     }
@@ -58,5 +58,4 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo data_get(auth()->user(),$expression); ?>";
         });
     }
-
 }

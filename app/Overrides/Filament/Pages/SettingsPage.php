@@ -5,8 +5,8 @@ namespace App\Overrides\Filament\Pages;
 use Filament\Forms\ComponentContainer;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
-use Filament\Pages\Contracts\HasFormActions;
 use Filament\Pages\Concerns;
+use Filament\Pages\Contracts\HasFormActions;
 use Filament\Pages\Page;
 
 /**
@@ -57,7 +57,7 @@ abstract class SettingsPage extends Page implements HasFormActions
 
         // Starts with the group name each of the keys in the data
         $data = collect($data)->mapWithKeys(function ($value, $key) {
-            $key = str($key)->start($this->group() . '.')->value();
+            $key = str($key)->start($this->group().'.')->value();
 
             return [$key => $value];
         })->toArray();
@@ -87,7 +87,7 @@ abstract class SettingsPage extends Page implements HasFormActions
 
     protected function callHook(string $hook): void
     {
-        if (!method_exists($this, $hook)) {
+        if (! method_exists($this, $hook)) {
             return;
         }
 

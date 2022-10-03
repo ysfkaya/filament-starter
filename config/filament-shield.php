@@ -44,7 +44,7 @@ return [
             'delete_any',
             'update',
         ],
-        'page'  =>  'view',
+        'page' => 'view',
         'widget' => 'view',
     ],
 

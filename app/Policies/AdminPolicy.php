@@ -36,7 +36,7 @@ class AdminPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Admin $adminModel
+     * @param  \App\Models\Admin  $adminModel
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(Admin $admin, Admin $adminModel)
@@ -59,7 +59,7 @@ class AdminPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Admin $adminModel
+     * @param  \App\Models\Admin  $adminModel
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(Admin $admin, Admin $adminModel)
@@ -71,7 +71,7 @@ class AdminPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Admin $adminModel
+     * @param  \App\Models\Admin  $adminModel
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(Admin $admin, Admin $adminModel)

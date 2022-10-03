@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('summary_data')) {
+if (! function_exists('summary_data')) {
     /**
      * @return string
      */
@@ -17,7 +17,7 @@ if (!function_exists('summary_data')) {
     }
 }
 
-if (!function_exists('data_get_sequence')) {
+if (! function_exists('data_get_sequence')) {
     function data_get_sequence($target, $keys, $default = null)
     {
         if (is_array($keys)) {

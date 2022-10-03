@@ -116,24 +116,24 @@ class ShieldSettings extends Page implements HasFormActions
                 ]),
             $layout::make()
             ->schema([
-                    Forms\Components\Placeholder::make('')
-                        ->label(__('filament-shield::filament-shield.labels.prefixes.placeholder')),
-                    Forms\Components\Grid::make()
-                        ->schema([
-                            Forms\Components\TagsInput::make('resource_permission_prefixes')
-                                ->label(__('filament-shield::filament-shield.labels.prefixes.resource'))
-                                ->placeholder(__('filament-shield::filament-shield.labels.prefixes.resource.placeholder'))
-                                ->required()
-                                ->separator(','),
-                            Forms\Components\TextInput::make('page_permission_prefix')
-                                ->label(__('filament-shield::filament-shield.labels.prefixes.page'))
-                                ->required(),
-                            Forms\Components\TextInput::make('widget_permission_prefix')
-                                ->label(__('filament-shield::filament-shield.labels.prefixes.widget'))
-                                ->required(),
-                        ])
-                        ->columns(3),
-                ]),
+                Forms\Components\Placeholder::make('')
+                    ->label(__('filament-shield::filament-shield.labels.prefixes.placeholder')),
+                Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\TagsInput::make('resource_permission_prefixes')
+                            ->label(__('filament-shield::filament-shield.labels.prefixes.resource'))
+                            ->placeholder(__('filament-shield::filament-shield.labels.prefixes.resource.placeholder'))
+                            ->required()
+                            ->separator(','),
+                        Forms\Components\TextInput::make('page_permission_prefix')
+                            ->label(__('filament-shield::filament-shield.labels.prefixes.page'))
+                            ->required(),
+                        Forms\Components\TextInput::make('widget_permission_prefix')
+                            ->label(__('filament-shield::filament-shield.labels.prefixes.widget'))
+                            ->required(),
+                    ])
+                    ->columns(3),
+            ]),
 
             $layout::make()
                 ->schema([
@@ -165,17 +165,17 @@ class ShieldSettings extends Page implements HasFormActions
                 ->schema([
                     Forms\Components\Grid::make()
                     ->schema([
-                            Forms\Components\Placeholder::make('')
-                                ->content(new HtmlString('<span class="font-medium text-sm text-gray-700">Resources Generator Option</span>')),
-                            Forms\Components\Radio::make('resources_generator_option')
-                                ->label('')
-                                ->options([
-                                    'policies_and_permissions' => 'Generate Policies & Permissions',
-                                    'policies' => 'Generate only Policies',
-                                    'permissions' => 'Generate only Permissions',
-                                ])
-                                ->inline(),
-                        ])
+                        Forms\Components\Placeholder::make('')
+                            ->content(new HtmlString('<span class="font-medium text-sm text-gray-700">Resources Generator Option</span>')),
+                        Forms\Components\Radio::make('resources_generator_option')
+                            ->label('')
+                            ->options([
+                                'policies_and_permissions' => 'Generate Policies & Permissions',
+                                'policies' => 'Generate only Policies',
+                                'permissions' => 'Generate only Permissions',
+                            ])
+                            ->inline(),
+                    ])
                         ->columns(1),
                 ]),
 

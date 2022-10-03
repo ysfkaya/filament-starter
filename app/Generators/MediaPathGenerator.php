@@ -16,8 +16,7 @@ class MediaPathGenerator extends DefaultPathGenerator
     }
 
     /**
-     * @param Media $media
-     *
+     * @param  Media  $media
      * @return string
      */
     protected function getMediaPathName(Media $media)

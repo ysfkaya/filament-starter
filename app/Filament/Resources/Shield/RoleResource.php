@@ -60,7 +60,7 @@ class RoleResource extends Resource
                                     ->afterStateUpdated(function (Closure $set, $state) {
                                         static::refreshEntitiesStatesViaSelectAll($set, $state);
                                     })
-                                    ->dehydrated(fn ($state):bool => $state),
+                                    ->dehydrated(fn ($state): bool => $state),
                             ])
                             ->columns([
                                 'sm' => 2,
@@ -348,7 +348,7 @@ class RoleResource extends Resource
     }
 
     /**
-     * @param Role $record
+     * @param  Role  $record
      */
     protected static function refreshResourceEntityStateAfterHydrated(Model $record, Closure $set, string $entity): void
     {
@@ -387,7 +387,7 @@ class RoleResource extends Resource
     /**--------------------------------*
     | Page Related Logic Start       |
     *----------------------------------*/
-    protected static function getPageEntities(): ? array
+    protected static function getPageEntities(): ?array
     {
         return collect(Filament::getPages())
             ->filter(function ($page) {
@@ -445,7 +445,7 @@ class RoleResource extends Resource
     /**--------------------------------*
     | Widget Related Logic Start       |
     *----------------------------------*/
-    protected static function getWidgetEntities(): ? array
+    protected static function getWidgetEntities(): ?array
     {
         return collect(Filament::getWidgets())
             ->filter(function ($widget) {

@@ -3,12 +3,14 @@
 namespace App\DTO;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Str;
+use Livewire\TemporaryUploadedFile;
 use Spatie\DataTransferObject\DataTransferObject;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Image extends DataTransferObject implements Responsable, Htmlable
+class Image extends DataTransferObject implements Responsable, Htmlable, Jsonable
 {
     public ?string $id;
 
@@ -20,9 +22,9 @@ class Image extends DataTransferObject implements Responsable, Htmlable
 
     public ?string $mime_type;
 
-    public ?string $url;
-
     public ?string $path;
+
+    public ?string $disk;
 
     public ?int $size;
 
@@ -36,12 +38,26 @@ class Image extends DataTransferObject implements Responsable, Htmlable
         return new self([
             'id' => $media->id,
             'uuid' => $media->uuid,
-            'name' =>  $media->name,
+            'name' => $media->name,
             'file_name' => $media->file_name,
             'mime_type' => $media->mime_type,
-            'url' => $media->getFullUrl(),
             'path' => Str::after($media->getUrl(), asset('/')),
+            'disk' => $media->disk,
             'size' => $media->size,
+        ]);
+    }
+
+    public static function fromTemporaryFile(string $disk, TemporaryUploadedFile $file, string $path)
+    {
+        return new self([
+            'id' => null,
+            'uuid' => null,
+            'name' => pathinfo($file->getFilename(), PATHINFO_FILENAME),
+            'file_name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getMimeType(),
+            'path' => $path,
+            'disk' => $disk,
+            'size' => $file->getSize(),
         ]);
     }
 
@@ -55,6 +71,11 @@ class Image extends DataTransferObject implements Responsable, Htmlable
         $media = Media::findByUuid($this->uuid);
 
         return $media;
+    }
+
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
     }
 
     public function toHtml()

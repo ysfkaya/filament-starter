@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages\Settings;
 
-use App\Overrides\Filament\Forms\Components\SettingsMediaLibraryFileUpload;
+use App\Overrides\Filament\Forms\Components\SettingsFileUpload;
 use App\Overrides\Filament\Pages\SettingsPage;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\TextInput;
@@ -32,8 +32,8 @@ class General extends SettingsPage
 
             TextInput::make('site_copyright')->label('Site Copyright'),
 
-            SettingsMediaLibraryFileUpload::make('site_logo')->label('Site Logo')->image(),
-            SettingsMediaLibraryFileUpload::make('site_favicon')->label('Site Favicon')->image(),
+            SettingsFileUpload::make('site_logo')->label('Site Logo')->image(),
+            SettingsFileUpload::make('site_favicon')->label('Site Favicon')->image(),
         ];
     }
 }

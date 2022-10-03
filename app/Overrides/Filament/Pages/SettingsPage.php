@@ -12,7 +12,7 @@ use Filament\Pages\Page;
 /**
  * @property ComponentContainer $form
  */
-class SettingsPage extends Page implements HasFormActions
+abstract class SettingsPage extends Page implements HasFormActions
 {
     use Concerns\HasFormActions;
 
@@ -20,9 +20,9 @@ class SettingsPage extends Page implements HasFormActions
 
     protected static string $view = 'filament.pages.settings';
 
-    protected static ?string $group = null;
-
     public $data;
+
+    abstract public function group(): string;
 
     public function mount(): void
     {
@@ -33,9 +33,7 @@ class SettingsPage extends Page implements HasFormActions
     {
         $this->callHook('beforeFill');
 
-        $group = static::$group;
-
-        $data = $this->mutateFormDataBeforeFill(setting()->get("{$group}.*",[]));
+        $data = $this->mutateFormDataBeforeFill(data_get(setting()->all(), $this->group()));
 
         $this->form->fill($data);
 
@@ -56,6 +54,13 @@ class SettingsPage extends Page implements HasFormActions
         $this->callHook('afterValidate');
 
         $data = $this->mutateFormDataBeforeSave($data);
+
+        // Starts with the group name each of the keys in the data
+        $data = collect($data)->mapWithKeys(function ($value, $key) {
+            $key = str($key)->start($this->group() . '.')->value();
+
+            return [$key => $value];
+        })->toArray();
 
         $this->callHook('beforeSave');
 

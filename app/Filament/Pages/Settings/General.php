@@ -19,7 +19,10 @@ class General extends SettingsPage
 
     protected static ?string $slug = 'settings/general';
 
-    protected static ?string $group = 'general';
+    public function group(): string
+    {
+        return 'general';
+    }
 
     protected function getFormSchema(): array
     {

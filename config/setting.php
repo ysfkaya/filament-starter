@@ -80,7 +80,14 @@ return [
     |
     */
     'override' => [
+        'seotools.meta.defaults.title' => 'general.site_title',
+        'seotools.meta.defaults.description' => 'general.site_description',
 
+        'seotools.opengraph.defaults.title' => 'general.site_title',
+        'seotools.opengraph.defaults.description' => 'general.site_description',
+
+        'seotools.json-ld.defaults.title' => 'general.site_title',
+        'seotools.json-ld.defaults.description' => 'general.site_description',
     ],
 
     /*

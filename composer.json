@@ -4,7 +4,8 @@
     "description": "A starter Laravel project with Filament admin panel",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "starter kit"
     ],
     "license": "MIT",
     "require": {

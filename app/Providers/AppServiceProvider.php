@@ -5,6 +5,7 @@ namespace App\Providers;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Filament::serving(function () {
-            Filament::registerTheme(mix('css/filament.css'));
+            Filament::registerTheme(
+                app(Vite::class)('resources/css/filament.css', 'filament-build'),
+            );
 
             Filament::registerUserMenuItems([
                 'account' => UserMenuItem::make()->url(route('filament.pages.profile')),

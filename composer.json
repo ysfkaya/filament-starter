@@ -13,6 +13,7 @@
         "akaunting/laravel-setting": "^1.2",
         "artesaos/seotools": "^1.0",
         "bezhansalleh/filament-shield": "^2.0",
+        "brick/money": "^0.7.0",
         "doctrine/dbal": "^3.3",
         "filament/filament": "^2.12",
         "filament/spatie-laravel-media-library-plugin": "^2.12",
@@ -23,7 +24,8 @@
         "laravel/tinker": "^2.7",
         "spatie/laravel-data": "^2.0",
         "spatie/laravel-sitemap": "^6.2",
-        "stechstudio/filament-impersonate": "^2.5"
+        "stechstudio/filament-impersonate": "^2.5",
+        "symfony/intl": "^6.1"
     },
     "require-dev": {
         "deployer/deployer": "^7.0",
@@ -83,7 +85,8 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/telescope"
+                "laravel/telescope",
+                "bezhansalleh/filament-shield"
             ]
         }
     },

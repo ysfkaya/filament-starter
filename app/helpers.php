@@ -1,5 +1,41 @@
 <?php
 
+use Brick\Math\Exception\RoundingNecessaryException;
+use Brick\Math\RoundingMode;
+use Brick\Money\Context\CustomContext;
+use Brick\Money\Money;
+use Symfony\Component\Intl\Currencies;
+
+if (! function_exists('price')) {
+    /**
+     * @param  float  $amount
+     * @return Money
+     */
+    function price(float $amount, $currency = 'USD', $roundingMode = RoundingMode::HALF_UP): Money
+    {
+        $context = new CustomContext(Currencies::getFractionDigits($currency));
+
+        try {
+            return Money::of($amount, $currency, $context, roundingMode: RoundingMode::UNNECESSARY);
+        } catch (RoundingNecessaryException $th) {
+            return Money::of($amount, $currency, $context, roundingMode: $roundingMode);
+        }
+    }
+}
+
+if (! function_exists('formatMoney')) {
+    /**
+     * @param  Money  $money
+     * @return string
+     */
+    function formatMoney(Money $money,$locale = null)
+    {
+        $locale = $locale ?? config('app.locale');
+
+        return $money->formatTo($locale, allowWholeNumber: true);
+    }
+}
+
 if (! function_exists('summary_data')) {
     /**
      * @return string

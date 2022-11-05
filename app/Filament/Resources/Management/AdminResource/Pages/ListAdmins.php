@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\AdminResource\Pages;
+namespace App\Filament\Resources\Management\AdminResource\Pages;
 
-use App\Filament\Resources\AdminResource;
+use App\Filament\Resources\Management\AdminResource;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\Management\AdminResource\Pages;
 
-use App\Filament\Resources\UserResource;
-use App\Models\User;
+use App\Filament\Resources\Management\AdminResource;
+use App\Models\Admin;
 use Filament\Resources\Pages\EditRecord;
 
-class EditUser extends EditRecord
+class EditAdmin extends EditRecord
 {
-    protected static string $resource = UserResource::class;
+    protected static string $resource = AdminResource::class;
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $getUser = User::where('email', $data['email'])->first();
+        $getUser = Admin::where('email', $data['email'])->first();
 
         if ($getUser) {
             if (empty($data['password'])) {

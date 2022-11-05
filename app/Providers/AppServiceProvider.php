@@ -9,6 +9,9 @@ use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @property \Illuminate\Foundation\Application $app
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,6 +31,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::shouldBeStrict(! $this->app->isProduction());
+
+        $this->bootFilamentServing();
+        $this->bootBladeDirectives();
+    }
+
+    protected function bootTelescope()
+    {
+        if ($this->app->isLocal()) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+    }
+
+    protected function bootFilamentServing(): void
+    {
         Filament::serving(function () {
             Filament::registerTheme(
                 app(Vite::class)('resources/css/filament.css', 'filament-build'),
@@ -37,13 +56,9 @@ class AppServiceProvider extends ServiceProvider
                 'account' => UserMenuItem::make()->url(route('filament.pages.profile')),
             ]);
         });
-
-        Model::preventLazyLoading(! $this->app->environment('production'));
-
-        $this->registerBladeDirectives();
     }
 
-    protected function registerBladeDirectives(): void
+    protected function bootBladeDirectives(): void
     {
         Blade::directive('data', function ($expression) {
             return "<?php echo e(data_get_sequence($expression)); ?>";

@@ -1,60 +1,50 @@
 <?php
 
 return [
+    'shield_resource' => [
+        'slug' => 'management/roles',
+        'navigation_sort' => -1,
+        'navigation_badge' => true,
+        'navigation_group' => true,
+        'is_globally_searchable' => false,
+        'show_model_path' => false,
+    ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Roles
-    |--------------------------------------------------------------------------
-    |
-    | Permissions' generated will be assigned automatically to the following roles when enabled.
-    | `filament_user` if enabled will help smoothly provide access to filament users
-    | in production when implementing `FilamentUser` interface.
-    */
+    'auth_provider_model' => [
+        'fqcn' => 'App\\Models\\Admin',
+    ],
 
     'super_admin' => [
         'enabled' => true,
-        'role_name' => 'super_admin',
+        'name' => 'super_admin',
+        'define_via_gate' => false,
+        'intercept_gate' => 'before', // after
     ],
 
     'filament_user' => [
         'enabled' => true,
-        'role_name' => 'owner',
+        'name' => 'filament_user',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Prefixes
-    |--------------------------------------------------------------------------
-    |
-    | When generating permissions for a `Resource` the resource `Model` will be prefixed with these.
-    | Keep in mind the order since these will also be used in generating policies for the resources.
-    |
-    | When generating permission for a `Widget` or `Page` the widget or page name will be prefixed
-    | with this.
-    | But you are free to change these in to whatever works for you.
-    */
-
-    'prefixes' => [
+    'permission_prefixes' => [
         'resource' => [
             'view',
             'view_any',
             'create',
+            'update',
+            'restore',
+            'restore_any',
+            'replicate',
+            'reorder',
             'delete',
             'delete_any',
-            'update',
+            'force_delete',
+            'force_delete_any',
         ],
-        'page' => 'view',
-        'widget' => 'view',
-    ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Entities Permission Generator
-    |--------------------------------------------------------------------------
-    | Enable the Entities for which you want the permissions or permissions and policies
-    | to be auto generated when you run `php artisan shield:install` command.
-    */
+        'page' => 'page',
+        'widget' => 'widget',
+    ],
 
     'entities' => [
         'pages' => true,
@@ -63,43 +53,27 @@ return [
         'custom_permissions' => false,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Resources Generator Option
-    |--------------------------------------------------------------------------
-    | Here you may define the "generator" option for resources.
-    | Sometimes it's beneficial to generate policies once locally, in case the production server
-    | does not allow you to regenerate them (Laravel Vapor) or you have updated the policies.
-    | Choose the option the fits best your use case.
-    |
-    | Supported options: "policies_and_permissions", "policies", "permissions"
-    */
-
-    'resources_generator_option' => 'policies_and_permissions',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Exclude
-    |--------------------------------------------------------------------------
-    | When enabled Exclude entites listed here during permission generation.
-    |
-    */
+    'generator' => [
+        'option' => 'policies_and_permissions',
+    ],
 
     'exclude' => [
         'enabled' => true,
+
         'pages' => [
             'Dashboard',
-            'Profile',
+            'Profile'
         ],
+
         'widgets' => [
             'AccountWidget',
             'FilamentInfoWidget',
         ],
+
         'resources' => [],
     ],
 
-    /**
-     * Register `RolePolicy` for `RoleResource`.
-     */
-    'register_role_policy' => true,
+    'register_role_policy' => [
+        'enabled' => true,
+    ],
 ];

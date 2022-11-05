@@ -12,7 +12,7 @@
         "php": "^8.0.2",
         "akaunting/laravel-setting": "^1.2",
         "artesaos/seotools": "^1.0",
-        "bezhansalleh/filament-shield": "^1.1",
+        "bezhansalleh/filament-shield": "^2.0",
         "doctrine/dbal": "^3.3",
         "filament/filament": "^2.12",
         "filament/spatie-laravel-media-library-plugin": "^2.12",
@@ -20,17 +20,17 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "spatie/data-transfer-object": "^3.9",
+        "spatie/laravel-data": "^2.0",
         "spatie/laravel-sitemap": "^6.2",
         "stechstudio/filament-impersonate": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
         "deployer/deployer": "^7.0",
         "fakerphp/faker": "^1.9.1",
         "glhd/laravel-dumper": "^1.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
+        "laravel/telescope": "^4.9",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^2.1",
@@ -81,7 +81,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

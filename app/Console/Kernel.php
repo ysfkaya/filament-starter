@@ -12,9 +12,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        \App\Overrides\Filament\Shield\MakeGenerateShieldCommand::class,
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.

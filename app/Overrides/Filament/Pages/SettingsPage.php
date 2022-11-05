@@ -33,7 +33,7 @@ abstract class SettingsPage extends Page implements HasFormActions
     {
         $this->callHook('beforeFill');
 
-        $data = $this->mutateFormDataBeforeFill(data_get(setting()->all(), $this->group()));
+        $data = $this->mutateFormDataBeforeFill(data_get(setting()->all(), $this->group(), []));
 
         $this->form->fill($data);
 

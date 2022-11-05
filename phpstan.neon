@@ -9,6 +9,3 @@ parameters:
         - app
         - routes
     level: 4
-    ignoreErrors:
-        - message: '#Access to an undefined property [a-zA-Z0-9\\_]+::\$\w+#'
-          path: "app/Filament/Resources/Shield/RoleResource/Pages/ShieldSettings.php"

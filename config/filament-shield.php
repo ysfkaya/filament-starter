@@ -23,7 +23,7 @@ return [
 
     'filament_user' => [
         'enabled' => true,
-        'name' => 'filament_user',
+        'name' => 'owner_admin',
     ],
 
     'permission_prefixes' => [
@@ -62,7 +62,7 @@ return [
 
         'pages' => [
             'Dashboard',
-            'Profile'
+            'Profile',
         ],
 
         'widgets' => [

@@ -29,7 +29,7 @@ final class SettingsFileUpload extends FileUpload
 
             $files = collect($state)
                 ->map(static function (array $file) {
-                    return new Image($file);
+                    return Image::from($file);
                 })
                 ->filter(static fn (Image $file) => blank($file) || $component->getDisk()->exists($file->path))
                 ->mapWithKeys(static fn (Image $file): array => [((string) Str::uuid()) => $file->path])

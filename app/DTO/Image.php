@@ -4,61 +4,51 @@ namespace App\DTO;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Str;
 use Livewire\TemporaryUploadedFile;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Image extends DataTransferObject implements Responsable, Htmlable, Jsonable
+class Image extends Data implements Htmlable, Jsonable
 {
-    public ?string $id;
-
-    public ?string $uuid;
-
-    public ?string $name;
-
-    public ?string $file_name;
-
-    public ?string $mime_type;
-
-    public ?string $path;
-
-    public ?string $disk;
-
-    public ?int $size;
-
-    public static function empty()
-    {
-        return new self();
+    public function __construct(
+        public ?string $id = null,
+        public ?string $uuid = null,
+        public ?string $name = null,
+        public ?string $file_name = null,
+        public ?string $mime_type = null,
+        public ?string $path = null,
+        public ?string $disk = null,
+        public ?int $size = null,
+    ) {
     }
 
     public static function fromMedia(Media $media)
     {
-        return new self([
-            'id' => $media->id,
-            'uuid' => $media->uuid,
-            'name' => $media->name,
-            'file_name' => $media->file_name,
-            'mime_type' => $media->mime_type,
-            'path' => Str::after($media->getUrl(), asset('/')),
-            'disk' => $media->disk,
-            'size' => $media->size,
-        ]);
+        return new self(
+            id: $media->id,
+            uuid: $media->uuid,
+            name: $media->name,
+            file_name: $media->file_name,
+            mime_type: $media->mime_type,
+            path: Str::after($media->getUrl(), asset('/')),
+            disk: $media->disk,
+            size: $media->size,
+        );
     }
 
     public static function fromTemporaryFile(string $disk, TemporaryUploadedFile $file, string $path)
     {
-        return new self([
-            'id' => null,
-            'uuid' => null,
-            'name' => pathinfo($file->getFilename(), PATHINFO_FILENAME),
-            'file_name' => $file->getClientOriginalName(),
-            'mime_type' => $file->getMimeType(),
-            'path' => $path,
-            'disk' => $disk,
-            'size' => $file->getSize(),
-        ]);
+        return new self(
+            id: null,
+            uuid: null,
+            name: pathinfo($file->getFilename(), PATHINFO_FILENAME),
+            file_name: $file->getClientOriginalName(),
+            mime_type: $file->getMimeType(),
+            path: $path,
+            disk: $disk,
+            size: $file->getSize(),
+        );
     }
 
     public function getMedia(): ?Media
@@ -73,18 +63,19 @@ class Image extends DataTransferObject implements Responsable, Htmlable, Jsonabl
         return $media;
     }
 
-    public function toJson($options = 0)
-    {
-        return json_encode($this->toArray(), $options);
-    }
-
     public function toHtml()
     {
         return $this->getMedia()?->toHtml() ?? '';
     }
 
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function toResponse($request)
     {
-        return $this->getMedia()?->toResponse($request) ?? '';
+        return $this->getMedia()?->toResponse($request) ?? parent::toResponse($request);
     }
 }

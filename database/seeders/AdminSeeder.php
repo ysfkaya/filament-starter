@@ -16,16 +16,16 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        if (! Role::whereName(config('filament-shield.super_admin.role_name'))->exists()) {
+        if (! Role::whereName(config('filament-shield.super_admin.name'))->exists()) {
             Role::create([
-                'name' => config('filament-shield.super_admin.role_name'),
+                'name' => config('filament-shield.super_admin.name'),
                 'guard_name' => config('filament.auth.guard'),
             ]);
         }
 
-        if (config('filament-shield.filament_user.enabled') && ! Role::whereName(config('filament-shield.filament_user.role_name'))->exists()) {
+        if (config('filament-shield.filament_user.enabled') && ! Role::whereName(config('filament-shield.filament_user.name'))->exists()) {
             Role::create([
-                'name' => config('filament-shield.filament_user.role_name'),
+                'name' => config('filament-shield.filament_user.name'),
                 'guard_name' => config('filament.auth.guard'),
             ]);
         }
@@ -37,13 +37,13 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('123Developer.'),
         ]);
 
-        $admin->assignRole(config('filament-shield.super_admin.role_name'));
+        $admin->assignRole(config('filament-shield.super_admin.name'));
 
         $owner = Admin::firstOrCreate(['email' => 'owner@site.com'], [
             'name' => 'Owner',
             'password' => bcrypt('123Owner.'),
         ]);
 
-        $owner->assignRole(config('filament-shield.filament_user.role_name', config('filament-shield.super_admin.role_name')));
+        $owner->assignRole(config('filament-shield.filament_user.name', config('filament-shield.super_admin.name')));
     }
 }

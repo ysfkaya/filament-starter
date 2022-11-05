@@ -4,7 +4,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
 use Filament\Pages;
-use Filament\Tables\Actions\Action;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -21,7 +20,7 @@ return [
     | Filament Path
     |--------------------------------------------------------------------------
     |
-    | The default is `admin` but you can change it to whatever works best and
+    | The default is `cp` but you can change it to whatever works best and
     | doesn't conflict with the routing in your application.
     |
     */
@@ -33,7 +32,7 @@ return [
     | Filament Core Path
     |--------------------------------------------------------------------------
     |
-    | This is the path which Filament will use to load it's core routes and assets.
+    | This is the path which Filament will use to load its core routes and assets.
     | You may change it if it conflicts with your other routes.
     |
     */
@@ -142,7 +141,6 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
         ],
     ],
 
@@ -175,6 +173,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Database notifications
+    |--------------------------------------------------------------------------
+    |
+    | By enabling this feature, your users are able to open a slide-over within
+    | the admin panel to view their database notifications.
+    |
+    */
+
+    'database_notifications' => [
+        'enabled' => false,
+        'polling_interval' => '30s',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Broadcasting
+    |--------------------------------------------------------------------------
+    |
+    | By uncommenting the Laravel Echo configuration, you may connect your
+    | admin panel to any Pusher-compatible websockets server.
+    |
+    | This will allow your admin panel to receive real-time notifications.
+    |
+    */
+
+    'broadcasting' => [
+
+        // 'echo' => [
+        //     'broadcaster' => 'pusher',
+        //     'key' => env('VITE_PUSHER_APP_KEY'),
+        //     'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
+        //     'forceTLS' => true,
+        // ],
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Layout
     |--------------------------------------------------------------------------
     |
@@ -186,6 +222,13 @@ return [
     */
 
     'layout' => [
+        'actions' => [
+            'modal' => [
+                'actions' => [
+                    'alignment' => 'left',
+                ],
+            ],
+        ],
         'forms' => [
             'actions' => [
                 'alignment' => 'left',
@@ -198,18 +241,15 @@ return [
         'max_content_width' => null,
         'notifications' => [
             'vertical_alignment' => 'top',
-            'alignment' => 'center',
+            'alignment' => 'right',
         ],
         'sidebar' => [
-            'is_collapsible_on_desktop' => false,
+            'is_collapsible_on_desktop' => true,
             'groups' => [
                 'are_collapsible' => true,
             ],
-        ],
-        'tables' => [
-            'actions' => [
-                'type' => Action::class,
-            ],
+            'width' => null,
+            'collapsed_width' => null,
         ],
     ],
 
@@ -268,7 +308,7 @@ return [
     | Middleware
     |--------------------------------------------------------------------------
     |
-    | You may customise the middleware stack that Filament uses to handle
+    | You may customize the middleware stack that Filament uses to handle
     | requests.
     |
     */

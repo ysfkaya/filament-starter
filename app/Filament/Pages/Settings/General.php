@@ -11,7 +11,7 @@ class General extends SettingsPage
 {
     use HasPageShield;
 
-    protected static ?string $navigationIcon = 'heroicon-o-sun';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
 
     protected static ?int $navigationSort = 4;
 

@@ -25,7 +25,7 @@ class PagePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(Admin $admin, Model $model)
@@ -48,7 +48,7 @@ class PagePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(Admin $admin, Model $model)
@@ -60,7 +60,7 @@ class PagePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(Admin $admin, Model $model)
@@ -78,5 +78,4 @@ class PagePolicy
     {
         return $admin->can('delete_any_page');
     }
-
 }

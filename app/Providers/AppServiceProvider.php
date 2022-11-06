@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Saade\FilamentLaravelLog\Pages\ViewLog;
 use Spatie\MissingPageRedirector\MissingPageRouter as SpatieMissingPageRouter;
+use Spatie\MissingPageRedirector\Redirector\Redirector;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
-use Spatie\MissingPageRedirector\Redirector\Redirector;
 
 /**
  * @property \Illuminate\Foundation\Application $app

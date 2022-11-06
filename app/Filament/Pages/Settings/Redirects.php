@@ -3,7 +3,6 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Overrides\Filament\Pages\SettingsPage;
-use App\Settings\RedirectsSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components;
 

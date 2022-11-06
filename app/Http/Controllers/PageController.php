@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\PageTemplate;
-use App\Enums\SectionType;
-use App\Models\Course;
 use App\Models\Page;
 use App\Services\PageSEO;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Spatie\MediaLibrary\HasMedia;
 
 class PageController extends Controller
 {
@@ -33,10 +28,11 @@ class PageController extends Controller
             $page->published();
         }
 
+        /** @var Page $page */
         $page = $page->firstOrFail();
 
         $this->loadSEO(new PageSEO($page));
 
-        return $page->view();
+        return $page->render();
     }
 }

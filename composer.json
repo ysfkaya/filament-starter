@@ -27,7 +27,6 @@
         "spatie/laravel-sitemap": "^6.2",
         "spatie/laravel-sluggable": "^3.4",
         "stancl/virtualcolumn": "^1.3",
-        "stechstudio/filament-impersonate": "^2.5",
         "symfony/intl": "^6.1",
         "z3d0x/filament-fabricator": "^1.0"
     },

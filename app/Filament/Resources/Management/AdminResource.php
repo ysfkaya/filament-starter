@@ -11,7 +11,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use STS\FilamentImpersonate\Impersonate;
 
 class AdminResource extends Resource
 {
@@ -62,9 +61,6 @@ class AdminResource extends Resource
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\BadgeColumn::make('roles.name')->label(__('Roles')),
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
-            ])
-            ->prependActions([
-                Impersonate::make('impersonate'),
             ])
             ->filters([
                 //

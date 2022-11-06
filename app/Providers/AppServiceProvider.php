@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
+use Z3d0X\FilamentFabricator\FilamentFabricatorServiceProvider;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 
 /**
@@ -32,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::shouldBeStrict(! $this->app->isProduction());
+        Model::preventLazyLoading(! $this->app->isProduction());
+        Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
 
         $this->bootFilamentServing();
         $this->bootBladeDirectives();
@@ -58,6 +61,12 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             PageResource::navigationGroup('CMS');
+
+            FilamentFabricator::registerSchemaSlot('sidebar.after',[
+                \Filament\Forms\Components\DateTimePicker::make('published_at')
+                ->label('Publish Date')
+                ->rules(['nullable', 'date']),
+            ]);
         });
     }
 

@@ -7,7 +7,7 @@ use App\Overrides\Filament\Pages\SettingsPage;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\TextInput;
 
-class General extends SettingsPage
+class Settings extends SettingsPage
 {
     use HasPageShield;
 
@@ -15,9 +15,11 @@ class General extends SettingsPage
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Management';
 
     protected static ?string $slug = 'settings/general';
+
+    protected static ?string $navigationLabel = 'Settings';
 
     public function group(): string
     {

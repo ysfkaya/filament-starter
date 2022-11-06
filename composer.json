@@ -23,6 +23,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "spatie/laravel-data": "^2.0",
+        "spatie/laravel-medialibrary": "^10.6",
         "spatie/laravel-sitemap": "^6.2",
         "spatie/laravel-sluggable": "^3.4",
         "stancl/virtualcolumn": "^1.3",

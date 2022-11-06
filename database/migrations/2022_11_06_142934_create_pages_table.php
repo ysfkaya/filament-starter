@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('layout')->default('default')->index();
             $table->json('blocks');
             $table->json('data')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

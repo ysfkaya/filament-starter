@@ -2,6 +2,7 @@
 
 namespace App\Generators;
 
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 
@@ -12,21 +13,6 @@ class MediaPathGenerator extends DefaultPathGenerator
      */
     protected function getBasePath(Media $media): string
     {
-        return $this->getMediaPathName($media).'/'.$media->collection_name.'/'.$media->getKey();
-    }
-
-    /**
-     * @param  Media  $media
-     * @return string
-     */
-    protected function getMediaPathName(Media $media)
-    {
-        if (method_exists($media->model, 'mediaPathName')) {
-            return $media->model->mediaPathName();
-        }
-
-        $className = $media->model_type;
-
-        return str(class_basename($className))->kebab()->lower()->plural();
+        return 'media/'.Str::kebab(class_basename($media->model_type)).'/'.$media->model_id.'/'.$media->id;
     }
 }

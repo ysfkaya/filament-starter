@@ -72,6 +72,8 @@ class AppServiceProvider extends ServiceProvider
 
     protected function bootBladeDirectives(): void
     {
+        Blade::anonymousComponentNamespace('filament.components.menu', 'menu');
+
         Blade::directive('data', function ($expression) {
             return "<?php echo e(data_get_sequence($expression)); ?>";
         });

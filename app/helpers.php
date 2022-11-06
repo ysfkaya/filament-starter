@@ -4,7 +4,30 @@ use Brick\Math\Exception\RoundingNecessaryException;
 use Brick\Math\RoundingMode;
 use Brick\Money\Context\CustomContext;
 use Brick\Money\Money;
+use Illuminate\Support\Facades\Storage;
+use Livewire\TemporaryUploadedFile;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
 use Symfony\Component\Intl\Currencies;
+use Illuminate\Support\Str;
+
+if (! function_exists('add_media_from_disk')) {
+    function add_media_from_disk(HasMedia $model, TemporaryUploadedFile $file): FileAdder
+    {
+        $disk = config('livewire.temporary_file_upload.disk', 'default');
+
+        $pathToTemporaryLivewireFile = (string) Str::of($file->getRealPath())
+            ->after(Storage::disk($disk)->path('/'))
+            ->ltrim('/');
+
+        $fileName = $file->getClientOriginalName();
+
+        $name = str($fileName)->beforeLast('.')->title()->value();
+
+        // @phpstan-ignore-next-line
+        return $model->addMediaFromDisk($pathToTemporaryLivewireFile, $disk)->usingName($name)->usingFileName($fileName);
+    }
+}
 
 if (! function_exists('price')) {
     /**
@@ -28,7 +51,7 @@ if (! function_exists('formatMoney')) {
      * @param  Money  $money
      * @return string
      */
-    function formatMoney(Money $money,$locale = null)
+    function formatMoney(Money $money, $locale = null)
     {
         $locale = $locale ?? config('app.locale');
 

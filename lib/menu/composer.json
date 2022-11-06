@@ -1,0 +1,32 @@
+{
+    "name": "ysfkaya/filament-menu",
+    "description": "A laravel menu structure to use in API services",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "kalnoy/nestedset": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ysfkaya\\Menu\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ysfkaya\\Menu\\MenuServiceProvider"
+            ],
+            "aliases": {
+                "Menu": "Ysfkaya\\Menu\\Facades\\Menu"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

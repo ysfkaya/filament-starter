@@ -65,14 +65,6 @@ class AppServiceProvider extends ServiceProvider
         ]);
     }
 
-    protected function bootTelescope()
-    {
-        if ($this->app->isLocal()) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
-        }
-    }
-
     protected function bootFilamentServing(): void
     {
         Filament::serving(function () {

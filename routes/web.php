@@ -21,4 +21,4 @@ Route::get('/', function () {
 Route::get('/blog', fn () => 'Blog');
 Route::get('/blog/{slug}', fn () => 'Blog post')->name('post');
 
-Route::get('{slug}', PageController::class)->where(['slug' => '^(?!'.ltrim(config('filament.path'), '/').'|filament).*$'])->name('page');
+Route::get('{slug}', PageController::class)->where(['slug' => '^(?!'.ltrim(config('filament.path'), '/').'|filament|'.ltrim(config('telescope.path')).').*$'])->name('page');

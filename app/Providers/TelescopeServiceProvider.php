@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
@@ -16,7 +17,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     public function register()
     {
-        // Telescope::night();
+        Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
@@ -63,9 +64,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return $user instanceof Admin && $user->isDeveloper();
         });
     }
 }

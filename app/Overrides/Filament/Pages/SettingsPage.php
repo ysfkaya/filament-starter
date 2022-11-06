@@ -59,6 +59,10 @@ abstract class SettingsPage extends Page implements HasFormActions
         $data = collect($data)->mapWithKeys(function ($value, $key) {
             $key = str($key)->start($this->group().'.')->value();
 
+            if (is_array($value) && empty($value)) {
+                $value = null;
+            }
+
             return [$key => $value];
         })->toArray();
 

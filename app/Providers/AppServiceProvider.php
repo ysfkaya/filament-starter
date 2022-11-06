@@ -2,15 +2,21 @@
 
 namespace App\Providers;
 
+use App\Models;
+use App\Overrides\Spatie\MissingPageRouter;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Vite;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Saade\FilamentLaravelLog\Pages\ViewLog;
+use Spatie\MissingPageRedirector\MissingPageRouter as SpatieMissingPageRouter;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
+use Spatie\MissingPageRedirector\Redirector\Redirector;
 
 /**
  * @property \Illuminate\Foundation\Application $app
@@ -24,7 +30,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->extend(SpatieMissingPageRouter::class, function ($instance, $app) {
+            $router = new Router($app['events'], $app);
+
+            $redirector = $app->make(Redirector::class);
+
+            return new MissingPageRouter($router, $redirector);
+        });
     }
 
     /**
@@ -39,6 +51,18 @@ class AppServiceProvider extends ServiceProvider
 
         $this->bootFilamentServing();
         $this->bootBladeDirectives();
+        $this->bootRelationMorphMap();
+    }
+
+    protected function bootRelationMorphMap()
+    {
+        Relation::enforceMorphMap([
+            'user' => Models\User::class,
+            'admin' => Models\Admin::class,
+            'post' => Models\Post::class,
+            'post_category' => Models\PostCategory::class,
+            'page' => Models\Page::class,
+        ]);
     }
 
     protected function bootTelescope()

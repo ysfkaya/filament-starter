@@ -17,7 +17,7 @@ class Settings extends SettingsPage
 
     protected static ?string $navigationGroup = 'Management';
 
-    protected static ?string $slug = 'settings/general';
+    protected static ?string $slug = 'management/settings';
 
     protected static ?string $navigationLabel = 'Settings';
 

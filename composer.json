@@ -22,6 +22,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "mohamedsabil83/filament-forms-tinyeditor": "^1.6",
+        "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-data": "^2.0",
         "spatie/laravel-medialibrary": "^10.6",
         "spatie/laravel-sitemap": "^6.2",

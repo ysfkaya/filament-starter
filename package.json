@@ -3,8 +3,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "dev:filament": "vite --config vite.filament.config.js",
-        "build:filament": "vite build --config vite.filament.config.js"
+        "dev:filament": "vite --config ./filament.vite.config.js",
+        "build:filament": "vite build --config ./filament.vite.config.js"
     },
     "devDependencies": {
         "@alpinejs/focus": "^3.10.3",

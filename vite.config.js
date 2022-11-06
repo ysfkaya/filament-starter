@@ -11,11 +11,6 @@ export default defineConfig({
             refresh: [...refreshPaths, "app/Http/Livewire/**"],
         }),
     ],
-    resolve: {
-        alias: {
-            "@": "/resources/js",
-        },
-    },
     css: {
         postcss: {
             plugins: [

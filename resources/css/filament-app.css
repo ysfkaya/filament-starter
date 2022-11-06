@@ -1,0 +1,5 @@
+@import "../../vendor/filament/filament/resources/css/app.css";
+
+.filament-resources-pages div[wire\:key*="data.parent_id"] {
+    display: none;
+}

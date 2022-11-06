@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Z3d0X\FilamentFabricator\Resources\PageResource;
 
 /**
  * @property \Illuminate\Foundation\Application $app
@@ -49,12 +50,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Filament::serving(function () {
             Filament::registerTheme(
-                app(Vite::class)('resources/css/filament.css', 'filament-build'),
+                app(Vite::class)('resources/css/filament-app.css', 'filament-build'),
             );
 
             Filament::registerUserMenuItems([
                 'account' => UserMenuItem::make()->url(route('filament.pages.profile')),
             ]);
+
+            PageResource::navigationGroup('CMS');
         });
     }
 

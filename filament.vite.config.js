@@ -4,7 +4,7 @@ import laravel, { refreshPaths } from "laravel-vite-plugin";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/css/filament.css"],
+            input: ["resources/css/filament-app.css"],
             refresh: [...refreshPaths, "app/Http/Livewire/**"],
             buildDirectory: '/filament-build',
         }),
@@ -13,7 +13,7 @@ export default defineConfig({
         postcss: {
             plugins: [
                 require("tailwindcss/nesting"),
-                require("tailwindcss")("./tailwind.filament.config.js"),
+                require("tailwindcss")("./filament.tailwind.config.js"),
                 require("autoprefixer"),
             ],
         },

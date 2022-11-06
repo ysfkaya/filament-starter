@@ -1,7 +1,6 @@
 module.exports = {
     content: [
-        // INFO: Remove the "vendor" path if you want to scan the Tailwind classes in vendor files
-        "./resources/views/!(filament|vendor)/**/*.blade.php",
+        "./resources/views/!(filament|vendor)/**/*.blade.php"
     ],
     darkMode: "class",
     theme: {

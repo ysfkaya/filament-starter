@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\CMS\PostCategoryResource\RelationManagers;
 
-use App\Filament\Resources\PostResource;
+use App\Filament\Resources\CMS\PostResource;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;

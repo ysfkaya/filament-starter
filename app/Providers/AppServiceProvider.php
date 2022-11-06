@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Saade\FilamentLaravelLog\Pages\ViewLog;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
-use Z3d0X\FilamentFabricator\FilamentFabricatorServiceProvider;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 
 /**
@@ -52,6 +52,14 @@ class AppServiceProvider extends ServiceProvider
     protected function bootFilamentServing(): void
     {
         Filament::serving(function () {
+            ViewLog::can(function ($admin) {
+                if (is_object($admin) && method_exists($admin, 'isDeveloper')) {
+                    return $admin->isDeveloper();
+                }
+
+                return false;
+            });
+
             Filament::registerTheme(
                 app(Vite::class)('resources/css/filament-app.css', 'filament-build'),
             );
@@ -62,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
 
             PageResource::navigationGroup('CMS');
 
-            FilamentFabricator::registerSchemaSlot('sidebar.after',[
+            FilamentFabricator::registerSchemaSlot('sidebar.after', [
                 \Filament\Forms\Components\DateTimePicker::make('published_at')
                 ->label('Publish Date')
                 ->rules(['nullable', 'date']),

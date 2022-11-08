@@ -24,6 +24,6 @@
     </div>
 
     <x-filament-support::grid  wire:key="menu-items-wrapper">
-        <x-menu::card :tree="$tree" :max-depth="$maxDepth" :addItemAction="$this->getCachedAction('addItem')" :selectedGroup="$selectedGroup" />
+        <x-menu::card :tree="$tree" :max-depth="$maxDepth" :addItemAction="$this->getCachedAction('add_item')" :selectedGroup="$selectedGroup" />
     </x-filament-support::grid>
 </x-filament::page>

@@ -1,12 +1,14 @@
 {
     "name": "ysfkaya/filament-menu",
-    "description": "A laravel menu structure to use in API services",
+    "description": "A menu for Laravel Filament",
     "keywords": [
         "laravel",
-        "nova"
+        "filamentphp"
     ],
     "license": "MIT",
     "require": {
+        "php": "^8.0",
+        "spatie/laravel-data": "^2.0",
         "kalnoy/nestedset": "^6.0"
     },
     "autoload": {

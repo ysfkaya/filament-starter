@@ -136,6 +136,10 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    'menu' => [
+        'max_depth' => 'The menu has a maximum depth of :max. Current depth: :current',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

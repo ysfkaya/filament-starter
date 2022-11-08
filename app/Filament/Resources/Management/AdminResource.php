@@ -44,9 +44,10 @@ class AdminResource extends Resource
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->disableAutocomplete(),
 
-                Forms\Components\BelongsToManyMultiSelect::make('roles')->rules([
+                Forms\Components\Select::make('roles')->rules([
                     Rule::notIn(Admin::superRoles()),
                 ])
+                ->multiple()
                 ->preload()
                 ->relationship('roles', 'name', fn ($query) => $query->whereNotIn('name', Admin::superRoles()))
                 ->label(__('Roles')),

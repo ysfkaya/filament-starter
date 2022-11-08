@@ -26,7 +26,7 @@ class MenuRepository
 
     public function create(MenuItemCollection $items)
     {
-        $items->each(fn (MenuItem $item) => $this->model::create($item->toArray()));
+        $items->each(fn (MenuItem $item) => $this->model::create($item->except('image')->toArray()));
 
         $this->uploadImages($items->original);
     }
@@ -40,14 +40,15 @@ class MenuRepository
     {
         $query = $this->query()->whereGroup($request->group)->whereLocale($request->locale);
 
+        $data = $request->getCollection()->ignoreIDs()->toArray();
+
         $query->rebuildTree(
-            $request->getCollection()->toArray(),
+            $data,
             delete: true
         );
 
         $this->uploadImages(
-            $request->getCollection(transform:false)
-                    ->toArray()
+            $request->getCollection(transform:false)->toArray()
         );
     }
 

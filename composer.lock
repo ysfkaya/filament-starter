@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfce457cf0a31e586b30e315d0194bcc",
+    "content-hash": "ac4458a380f52c597a0f5f5780c11f55",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -9606,11 +9606,13 @@
             "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "./lib/menu",
-                "reference": "60dda1d9d36fbf0cd1dee743de3a8c8982e5515d"
+                "url": "./lib/filament-menu",
+                "reference": "4858e9c5798b86abb5dcea2e772735dae0a3eee1"
             },
             "require": {
-                "kalnoy/nestedset": "^6.0"
+                "kalnoy/nestedset": "^6.0",
+                "php": "^8.0",
+                "spatie/laravel-data": "^2.0"
             },
             "type": "library",
             "extra": {
@@ -9631,10 +9633,49 @@
             "license": [
                 "MIT"
             ],
-            "description": "A laravel menu structure to use in API services",
+            "description": "A menu for Laravel Filament",
             "keywords": [
+                "filamentphp",
+                "laravel"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "ysfkaya/filament-notification",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./lib/filament-notification",
+                "reference": "4c7df49a5d82a61354181f8ead961b7944752bb8"
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ysfkaya\\FilamentNotification\\FilamentNotificationProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ysfkaya\\FilamentNotification\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A notification package for Laravel Filament.",
+            "keywords": [
+                "filamentphp",
                 "laravel",
-                "nova"
+                "notification"
             ],
             "transport-options": {
                 "relative": true

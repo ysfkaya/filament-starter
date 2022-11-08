@@ -1,0 +1,34 @@
+{
+    "name": "ysfkaya/filament-notification",
+    "description": "A notification package for Laravel Filament.",
+    "keywords": [
+        "laravel",
+        "filamentphp",
+        "notification"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "spatie/laravel-package-tools": "^1.9.2",
+        "filament/filament": "^2.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Ysfkaya\\FilamentNotification\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ysfkaya\\FilamentNotification\\FilamentNotificationProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

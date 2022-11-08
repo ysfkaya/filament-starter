@@ -37,21 +37,50 @@ trait HandlesMenuManager
 
     public $mountedChildTarget;
 
-    public $menuItemForm = [];
-
     public function addItem(array $data)
     {
-        $item = new MenuItem([
-            'title' => $data['title'],
-            'url' => $data['url'],
-            'target' => $data['target'],
-            'group' => $this->selectedGroup,
-            'exists' => false,
-        ]);
+        $item = new MenuItem(
+            title: $data['title'],
+            url: $data['url'],
+            target: $data['target'],
+            group: $this->selectedGroup,
+        );
 
         $this->tree->put((string) Str::uuid(), $item->toArray());
 
         $this->hasChanges = true;
+    }
+
+    public function saveItem(array $data)
+    {
+        $image = head($this->mountedActionData['image'] ?? []);
+
+        if ($image instanceof TemporaryUploadedFile) {
+            $data['image'] = $image->serializeForLivewireResponse();
+        }
+
+        if ($this->mountedItem) {
+            $modelData = data_get($this, $this->mountedItem);
+
+            $tree = [
+                'tree' => $this->tree->all(),
+            ];
+
+            data_set($tree, $this->mountedItem, array_merge($modelData, $data));
+
+            $this->tree = collect($tree['tree']);
+
+            if (isset($modelData['id']) && MenuModel::where('id', $modelData['id'])->exists()) {
+                $this->mountAction('save');
+            } else {
+                $this->hasChanges = true;
+            }
+
+            $this->mountedItem = null;
+            $this->mountedItemData = [];
+        }
+
+        $this->mountedActionData = [];
     }
 
     public function editItem(string $statePath)
@@ -201,27 +230,13 @@ trait HandlesMenuManager
     protected function getActions(): array
     {
         return [
-            Action::make('addItem')
+            Action::make('add_item')
+                ->submit('addItem')
                 ->label('Add Item')
                 ->icon('heroicon-o-plus-circle')
                 ->color('secondary')
                 ->action('addItem')
-                ->form([
-                    TextInput::make('title')
-                        ->label('Title')
-                        ->rules(['required', 'string', 'max:255'])
-                        ->required(),
-
-                    TextInput::make('url')
-                        ->label('URL')
-                        ->rules(['required', 'string'])
-                        ->required(),
-
-                    Select::make('target')->options([
-                        '_self' => 'Same tab',
-                        '_blank' => 'New tab',
-                    ])->rules(['required'])->default('_self')->required(),
-                ]),
+                ->form($this->actionForm()),
 
             Action::make('save')
                 ->label(__('filament::resources/pages/edit-record.form.actions.save.label'))
@@ -271,9 +286,10 @@ trait HandlesMenuManager
                     $this->hasChanges = false;
 
                     $action->color('primary');
-                })->color($this->getSaveButtonColor()),
+                })->color(fn () => $this->hasChanges ? 'warning' : 'primary'),
 
             Action::make('item')
+                ->submit('saveItem')
                 ->mountUsing(function (ComponentContainer $form) {
                     if (! $this->mountedItem) {
                         return;
@@ -294,113 +310,93 @@ trait HandlesMenuManager
                     $form->fill($this->mountedItemData);
                 })
                 ->view('filament.components.menu.hidden-action')
-                ->form([
-                    TextInput::make('title')
-                        ->label('Title')
-                        ->required(),
-                    TextInput::make('url')
-                        ->label('URL')
-                        ->required(),
-                    Select::make('target')->options([
-                        '_self' => 'Same tab',
-                        '_blank' => 'New tab',
-                    ]),
-                    SpatieMediaLibraryFileUpload::make('image')
-                        ->hidden(fn () => $this->selectedGroup === 'footer')
-                        ->getUploadedFileUrlUsing(function (string $file) {
-                            if (Str::isUuid($file) && $media = Media::findByUuid($file)) {
-                                // @phpstan-ignore-next-line
-                                return $media->getUrl();
-                            }
-
-                            $storage = TemporaryUploadedFile::createFromLivewire($file);
-
-                            if (! $storage->exists()) {
-                                return null;
-                            }
-
-                            return $storage->temporaryUrl();
-                        })
-                        ->deleteUploadedFileUsing(function (string $file) {
-                            if (Str::isUuid($file) && $media = Media::findByUuid($file)) {
-                                $options = $media->model->options ?? [];
-
-                                // @phpstan-ignore-next-line
-                                $media->model->update([
-                                    'options' => Arr::except($options, 'media'),
-                                ]);
-
-                                $media->delete();
-
-                                return true;
-                            }
-
-                            $storage = TemporaryUploadedFile::createFromLivewire($file);
-
-                            if (! $storage->exists()) {
-                                return;
-                            }
-
-                            $storage->delete();
-                        })
-                        ->afterStateHydrated(function ($state, $component) {
-                            if (blank($state)) {
-                                $component->state([]);
-
-                                return;
-                            }
-
-                            $temporaryFiles = collect(Arr::wrap($state))
-                                ->whereInstanceOf(TemporaryUploadedFile::class)
-                                ->filter(static fn ($file) => $file->exists())
-                                ->mapWithKeys(static fn ($file): array => [((string) Str::uuid()) => $file->getFilename()]);
-
-                            if ($temporaryFiles->isNotEmpty()) {
-                                $component->state($temporaryFiles->all());
-                            } else {
-                                $mediaFiles = collect(Arr::wrap($state))
-                                    ->filter(fn ($uuid) => Str::isUuid($uuid))
-                                    ->all();
-
-                                $component->state($mediaFiles);
-                            }
-                        })
-                        ->image()
-                        ->preserveFilenames(),
-                ])
+                ->form($this->actionForm())
                 ->modalWidth('lg')
-                ->action(function (array $data) {
-                    $image = head($this->mountedActionData['image'] ?? []);
-
-                    if ($image instanceof TemporaryUploadedFile) {
-                        $data['image'] = $image->serializeForLivewireResponse();
-                    }
-
-                    if ($this->mountedItem) {
-                        $modelData = data_get($this, $this->mountedItem);
-
-                        $tree = [
-                            'tree' => $this->tree->all(),
-                        ];
-
-                        data_set($tree, $this->mountedItem, array_merge($modelData, $data));
-
-                        $this->tree = collect($tree['tree']);
-
-                        if (isset($modelData['id']) && MenuModel::where('id', $modelData['id'])->exists()) {
-                            $this->mountAction('save');
-                        } else {
-                            $this->hasChanges = true;
-                        }
-
-                        $this->mountedItem = null;
-                        $this->mountedItemData = [];
-                    }
-
-                    $this->mountedActionData = [];
-                })
                 ->modalButton('Save')
                 ->label('Item'),
+        ];
+    }
+
+    protected function actionForm()
+    {
+        return [
+            TextInput::make('title')
+                ->label('Title')
+                ->rules(['required', 'string', 'max:255'])
+                ->required(),
+
+            TextInput::make('url')
+                ->label('URL')
+                ->rules(['required', 'string'])
+                ->required(),
+
+            Select::make('target')->options([
+                '_self' => 'Same tab',
+                '_blank' => 'New tab',
+            ])->rules(['required'])->default('_self')->required(),
+
+            SpatieMediaLibraryFileUpload::make('image')
+                ->hidden(fn () => $this->selectedGroup === 'footer')
+                ->getUploadedFileUrlUsing(function (string $file) {
+                    if (Str::isUuid($file) && $media = Media::findByUuid($file)) {
+                        // @phpstan-ignore-next-line
+                        return $media->getUrl();
+                    }
+
+                    $storage = TemporaryUploadedFile::createFromLivewire($file);
+
+                    if (! $storage->exists()) {
+                        return null;
+                    }
+
+                    return $storage->temporaryUrl();
+                })
+                ->deleteUploadedFileUsing(function (string $file) {
+                    if (Str::isUuid($file) && $media = Media::findByUuid($file)) {
+                        $options = $media->model->options ?? [];
+
+                        // @phpstan-ignore-next-line
+                        $media->model->update([
+                            'options' => Arr::except($options, 'media'),
+                        ]);
+
+                        $media->delete();
+
+                        return true;
+                    }
+
+                    $storage = TemporaryUploadedFile::createFromLivewire($file);
+
+                    if (! $storage->exists()) {
+                        return;
+                    }
+
+                    $storage->delete();
+                })
+                ->afterStateHydrated(function ($state, $component) {
+                    if (blank($state)) {
+                        $component->state([]);
+
+                        return;
+                    }
+
+                    $temporaryFiles = collect(Arr::wrap($state))
+                        ->whereInstanceOf(TemporaryUploadedFile::class)
+                        ->filter(static fn ($file) => $file->exists())
+                        ->mapWithKeys(static fn ($file): array => [((string) Str::uuid()) => $file->getFilename()]);
+
+                    if ($temporaryFiles->isNotEmpty()) {
+                        $component->state($temporaryFiles->all());
+                    } else {
+                        $mediaFiles = collect(Arr::wrap($state))
+                            ->filter(fn ($uuid) => Str::isUuid($uuid))
+                            ->all();
+
+                        $component->state($mediaFiles);
+                    }
+                })
+                ->image()
+                ->preserveFilenames(),
         ];
     }
 }

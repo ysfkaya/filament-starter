@@ -57,5 +57,8 @@ return [
      *
      * ['main' => 2]
      */
-    'max_depth' => [],
+    'max_depth' => [
+        'header' => 2,
+        'footer' => 2,
+    ],
 ];

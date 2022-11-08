@@ -62,11 +62,6 @@ class MenuManager extends Page
         $this->hasChanges = false;
     }
 
-    protected function getSaveButtonColor()
-    {
-        return $this->hasChanges ? 'warning' : 'primary';
-    }
-
     protected function mapWithUuid($item)
     {
         if (isset($item['children']) && count($item['children']) > 0) {

@@ -18,7 +18,7 @@ class MaxDepthRule implements Rule
 
     public function __construct(private string|null $group)
     {
-        $this->maxDepth = config('menu.max_depth.'.$group);
+        $this->maxDepth = config('menu.max_depth.'.$group, 1);
         $this->level = [];
     }
 

@@ -36,6 +36,11 @@ class MenuItemCollection extends Collection
         return new static($items, $transform);
     }
 
+    public function ignoreIDs()
+    {
+        return $this->map(fn (MenuItem $item) => $item->except('id'));
+    }
+
     protected function transformMenuItem($items)
     {
         $items = $this->getArrayableItems($items);
@@ -45,7 +50,7 @@ class MenuItemCollection extends Collection
                 continue;
             }
 
-            $items[$key] = new MenuItem((array) $item);
+            $items[$key] = MenuItem::from((array) $item);
         }
 
         return $items;

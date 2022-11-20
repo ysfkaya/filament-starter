@@ -2,24 +2,17 @@
     'title' => null,
     'dir' => 'ltr',
 ])
+@props([
+    'dir' => 'ltr',
+])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $dir }}">
 
 <head>
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.start') }}
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    @foreach (\Filament\Facades\Filament::getMeta() as $tag)
-        {{ $tag }}
-    @endforeach
-
-    @if ($favicon = \Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getFavicon())
-        <link rel="icon" href="{{ $favicon }}">
-    @endif
 
     {!! SEO::generate() !!}
 
@@ -31,38 +24,23 @@
         }
     </style>
 
+    @vite('resources/css/app.css')
 
-    @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getStyles() as $name => $path)
-        @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
-            {!! $path !!}
-        @else
-            <link rel="stylesheet" href="{{ $path }}" />
-        @endif
-    @endforeach
+    @stack('styles')
 
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
+    @setting('general.site_head')
 </head>
 
 <body>
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
+    @setting('general.site_body')
 
     {{ $slot }}
 
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.start') }}
-
-    @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getScripts() as $name => $path)
-        @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
-            {!! $path !!}
-        @else
-            <script defer src="{{ $path }}"></script>
-        @endif
-    @endforeach
+    @vite('resources/js/app.js')
 
     @stack('scripts')
 
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.end') }}
-
-    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.end') }}
+    @setting('general.site_footer')
 </body>
 
 </html>

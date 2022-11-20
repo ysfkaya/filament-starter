@@ -1,5 +1,6 @@
 @import "../../vendor/filament/filament/resources/css/app.css";
 
+/* Hides the parent id field in pages resources */
 .filament-resources-pages div[wire\:key*="data.parent_id"] {
     display: none;
 }

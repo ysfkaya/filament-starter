@@ -14,6 +14,6 @@ class DefaultLayout extends Layout
             return static::$component;
         }
 
-        return 'layouts.' . static::getName();
+        return 'layouts.'.static::getName();
     }
 }

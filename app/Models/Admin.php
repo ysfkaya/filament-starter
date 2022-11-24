@@ -47,11 +47,6 @@ class Admin extends Authenticatable implements FilamentUser
         return true;
     }
 
-    public function canImpersonate()
-    {
-        return $this->isSuper();
-    }
-
     public static function superRoles(): array
     {
         return [

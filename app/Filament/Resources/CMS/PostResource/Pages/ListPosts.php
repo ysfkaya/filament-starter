@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\CMS\PostResource\Pages;
 
-use App\Filament\Pages\Settings\Blog;
+use App\Filament\Pages\Settings\Post;
 use App\Filament\Resources\CMS\PostResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -18,7 +18,7 @@ class ListPosts extends ListRecords
             Actions\Action::make('view_settings')
                 ->label('Settings')
                 ->icon('heroicon-o-cog')
-                ->url(route(Blog::getRouteName())),
+                ->url(route(Post::getRouteName())),
         ];
     }
 }

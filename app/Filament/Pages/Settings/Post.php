@@ -6,7 +6,7 @@ use App\Overrides\Filament\Pages\SettingsPage;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 
-class Blog extends SettingsPage
+class Post extends SettingsPage
 {
     use HasPageShield;
 
@@ -18,15 +18,15 @@ class Blog extends SettingsPage
 
     protected static ?string $navigationLabel = 'Settings';
 
-    protected static ?string $slug = 'blog/settings';
+    protected static ?string $slug = 'cms/post/settings';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected ?string $heading = 'Blog Settings';
+    protected ?string $heading = 'Post Settings';
 
     public function group(): string
     {
-        return 'blog';
+        return 'post';
     }
 
     protected function getFormSchema(): array

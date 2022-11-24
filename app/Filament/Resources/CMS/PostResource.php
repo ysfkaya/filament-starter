@@ -18,7 +18,7 @@ class PostResource extends Resource
 
     protected static ?string $navigationGroup = 'CMS';
 
-    protected static ?string $slug = 'cms/blog';
+    protected static ?string $slug = 'cms/posts';
 
     protected static ?int $navigationSort = -1;
 

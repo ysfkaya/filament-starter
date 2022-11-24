@@ -87,6 +87,8 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'admin'),
 
+        'login' => '/cp/login',
+
         'pages' => [
             'login' => \Filament\Http\Livewire\Auth\Login::class,
         ],

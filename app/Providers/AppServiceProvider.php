@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
             /** @var \Filament\Forms\Components\Field $instance */
             $instance = $this;
 
-            return $instance->afterStateHydrated(function ($component, $record) use ($prev) {
+            return $instance->afterStateHydrated(function ($component, $record) {
                 if (blank($record)) {
                     return;
                 }

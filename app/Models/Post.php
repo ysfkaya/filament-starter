@@ -5,27 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kolossal\Multiplex\HasMeta;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Stancl\VirtualColumn\VirtualColumn;
 
 /**
  * @property-read array|null $collections
  */
 class Post extends Model implements HasMedia, Sortable
 {
-    use HasFactory, InteractsWithMedia, HasSlug, VirtualColumn, SortableTrait;
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
-    protected $guarded = [];
+    use HasFactory, InteractsWithMedia, HasSlug, SortableTrait, HasMeta;
 
     /**
      * The attributes that should be cast.
@@ -71,20 +64,5 @@ class Post extends Model implements HasMedia, Sortable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')->singleFile();
-    }
-
-    public static function getCustomColumns(): array
-    {
-        return [
-            'id',
-            'category_id',
-            'title',
-            'slug',
-            'body',
-            'order_column',
-            'published_at',
-            'created_at',
-            'updated_at',
-        ];
     }
 }

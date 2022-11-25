@@ -10,7 +10,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -37,20 +36,16 @@ class PostResource extends Resource
                 Forms\Components\Grid::make(3)
                     ->schema([
                         Forms\Components\Card::make([
-                            Forms\Components\TextInput::make('title')
-                                ->label('Title')
-                                ->rules(['required', 'string', 'max:255'])
-                                ->reactive()
-                                ->afterStateUpdated(function ($set, $state, string $context) {
-                                    if ($context !== 'edit') {
-                                        $set('slug', Str::slug($state));
-                                    }
-                                })->required(),
-
-                            Forms\Components\TextInput::make('slug')
-                            ->label('Slug')
-                            ->prefix('/blog/')
-                            ->required(),
+                            \Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+                                fieldTitle: 'title',
+                                fieldSlug: 'slug',
+                                urlPath: '/blog/',
+                                titleRules:[
+                                    'required',
+                                    'string',
+                                    'max:255',
+                                ],
+                            ),
 
                             TinyEditor::make('body')
                                 ->label('Body')
@@ -65,7 +60,7 @@ class PostResource extends Resource
                                 ->image()
                                 ->rules(['required', 'image']),
 
-                            Forms\Components\Select::make('category_id')
+                            Forms\Components\Select::make('post_category_id')
                                 ->label('Category')
                                 ->relationship('category', 'name')
                                 ->nullable()
@@ -81,9 +76,11 @@ class PostResource extends Resource
                                 ->rules(['nullable', 'date']),
 
                             Forms\Components\TextInput::make('seo.title')
+                                ->usesMeta()
                                 ->label('SEO - Title'),
 
                             Forms\Components\Textarea::make('seo.description')
+                                ->usesMeta()
                                 ->label('SEO - Description'),
                         ])->columnSpan(1),
 

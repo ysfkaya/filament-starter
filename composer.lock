@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5344afd72b22472235f99e832601f97c",
+    "content-hash": "cb74823d8f2df70ae2e669e5e2768717",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -675,6 +675,83 @@
                 }
             ],
             "time": "2022-01-18T22:48:40+00:00"
+        },
+        {
+            "name": "camya/filament-title-with-slug",
+            "version": "v0.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/camya/filament-title-with-slug.git",
+                "reference": "5273b6c6fe5ecb533adc14a3c8d06ee5bada8bbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/camya/filament-title-with-slug/zipball/5273b6c6fe5ecb533adc14a3c8d06ee5bada8bbd",
+                "reference": "5273b6c6fe5ecb533adc14a3c8d06ee5bada8bbd",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.16",
+                "illuminate/contracts": "^9.0",
+                "php": "^8.0.2",
+                "spatie/laravel-package-tools": "^1.13.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "roave/security-advisories": "dev-latest",
+                "spatie/laravel-ray": "^1.31"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Camya\\Filament\\FilamentTitleWithSlugServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Camya\\Filament\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Scheibel",
+                    "email": "contact@camya.com",
+                    "homepage": "https://www.camya.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TitleWithSlugInput - Easy Permalink Slugs for the FilamentPHP Form Builder (PHP / Laravel / Livewire)",
+            "homepage": "https://github.com/camya/filament-title-with-slug",
+            "keywords": [
+                "alpinejs",
+                "filament",
+                "framework",
+                "laravel",
+                "livewire",
+                "permalink",
+                "slug",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/camya/filament-title-with-slug/issues",
+                "source": "https://github.com/camya/filament-title-with-slug/tree/v0.5.3"
+            },
+            "time": "2022-11-21T14:57:50+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -2491,6 +2568,78 @@
                 "source": "https://github.com/lazychaser/laravel-nestedset/tree/v6.0.1"
             },
             "time": "2022-02-11T06:17:57+00:00"
+        },
+        {
+            "name": "kolossal-io/laravel-multiplex",
+            "version": "v0.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kolossal-io/laravel-multiplex.git",
+                "reference": "f9815b957a1228aab0c1ec922af4e821ed040bc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kolossal-io/laravel-multiplex/zipball/f9815b957a1228aab0c1ec922af4e821ed040bc9",
+                "reference": "f9815b957a1228aab0c1ec922af4e821ed040bc9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "mattiasgeniar/phpunit-query-count-assertions": "^1.1",
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kolossal\\Multiplex\\MultiplexServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kolossal\\Multiplex\\": "src",
+                    "Kolossal\\Multiplex\\Tests\\Factories\\": "tests/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijan Barkic",
+                    "email": "marijan@kolossal.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel package to attach versioned meta data to Eloquent models.",
+            "homepage": "https://github.com/Kolossal-io/laravel-multiplex",
+            "keywords": [
+                "eloquent",
+                "kolossal",
+                "laravel",
+                "laravel-multiplex",
+                "meta",
+                "metadata"
+            ],
+            "support": {
+                "issues": "https://github.com/kolossal-io/laravel-multiplex/issues",
+                "source": "https://github.com/kolossal-io/laravel-multiplex/tree/v0.7.5"
+            },
+            "time": "2022-11-23T12:31:40+00:00"
         },
         {
             "name": "laravel/framework",
@@ -7021,50 +7170,6 @@
                 }
             ],
             "time": "2022-07-29T15:01:46+00:00"
-        },
-        {
-            "name": "stancl/virtualcolumn",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/archtechx/virtualcolumn.git",
-                "reference": "ab3f943990e8b3e0a6ba5e90be6bf216bdaf1719"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/virtualcolumn/zipball/ab3f943990e8b3e0a6ba5e90be6bf216bdaf1719",
-                "reference": "ab3f943990e8b3e0a6ba5e90be6bf216bdaf1719",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^6.0|^8.0|^9.0",
-                "illuminate/support": "^6.0|^8.0|^9.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^4.0|^6.0|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Stancl\\VirtualColumn\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel Štancl",
-                    "email": "samuel.stancl@gmail.com"
-                }
-            ],
-            "description": "Eloquent virtual column.",
-            "support": {
-                "issues": "https://github.com/archtechx/virtualcolumn/issues",
-                "source": "https://github.com/archtechx/virtualcolumn/tree/v1.3.0"
-            },
-            "time": "2022-10-21T12:09:30+00:00"
         },
         {
             "name": "symfony/console",

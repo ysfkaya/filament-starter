@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('title')->index();
             $table->string('slug');
             $table->text('body');
-            $table->json('data')->nullable();
             $table->integer('order_column')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

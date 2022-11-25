@@ -6,12 +6,14 @@ use App\Models;
 use App\Overrides\Spatie\MissingPageRouter;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
+use Filament\Support\Components\ViewComponent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Vite;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Kolossal\Multiplex\HasMeta;
 use Saade\FilamentLaravelLog\Pages\ViewLog;
 use Spatie\MissingPageRedirector\MissingPageRouter as SpatieMissingPageRouter;
 use Spatie\MissingPageRedirector\Redirector\Redirector;
@@ -48,10 +50,43 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! $this->app->isProduction());
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
+        Model::unguard();
 
         $this->bootFilamentServing();
         $this->bootBladeDirectives();
         $this->bootRelationMorphMap();
+
+        $this->registerMacros();
+    }
+
+    protected function registerMacros()
+    {
+        ViewComponent::macro('usesMeta', function () {
+            /** @var \Filament\Forms\Components\Field $instance */
+            $instance = $this;
+
+            $prev = $instance->callAfterStateHydrated();
+
+            return $instance->afterStateHydrated(function ($component, $record) use ($prev) {
+                if (blank($record)) {
+                    return;
+                }
+
+                if (! in_array(HasMeta::class, class_uses_recursive($record))) {
+                    return;
+                }
+
+                $meta = $record->pluckMeta();
+
+                $key = $component->getName();
+
+                $value = data_get($meta, $key);
+
+                $component->state($value);
+
+                return $prev;
+            });
+        });
     }
 
     protected function bootRelationMorphMap()

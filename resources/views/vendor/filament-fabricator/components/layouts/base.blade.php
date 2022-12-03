@@ -1,8 +1,4 @@
 @props([
-    'title' => null,
-    'dir' => 'ltr',
-])
-@props([
     'dir' => 'ltr',
 ])
 

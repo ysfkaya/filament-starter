@@ -6,9 +6,9 @@ use Closure;
 
 trait HasFormSchema
 {
-    protected array | Closure $formSchema = [];
+    protected array|Closure $formSchema = [];
 
-    public function form(array | Closure $schema): static
+    public function form(array|Closure $schema): static
     {
         $this->formSchema = $schema;
 

@@ -10,9 +10,9 @@ class ButtonAction extends Action
 
     protected string $view = 'filament-notification::actions.button-action';
 
-    protected string | Closure | null $iconPosition = null;
+    protected string|Closure|null $iconPosition = null;
 
-    public function iconPosition(string | Closure | null $position): static
+    public function iconPosition(string|Closure|null $position): static
     {
         $this->iconPosition = $position;
 

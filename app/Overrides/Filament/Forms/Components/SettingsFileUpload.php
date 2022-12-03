@@ -12,13 +12,13 @@ use Livewire\TemporaryUploadedFile;
 
 final class SettingsFileUpload extends FileUpload
 {
-    protected bool | \Closure $shouldPreserveFilenames = true;
+    protected bool|\Closure $shouldPreserveFilenames = true;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->afterStateHydrated(static function (BaseFileUpload $component, string | array | null $state): void {
+        $this->afterStateHydrated(static function (BaseFileUpload $component, string|array|null $state): void {
             if (blank($state)) {
                 $component->state([]);
 

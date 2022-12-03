@@ -6,9 +6,9 @@ use Closure;
 
 trait CanRequireConfirmation
 {
-    protected bool | Closure $isConfirmationRequired = false;
+    protected bool|Closure $isConfirmationRequired = false;
 
-    public function requiresConfirmation(bool | Closure $condition = true): static
+    public function requiresConfirmation(bool|Closure $condition = true): static
     {
         $this->isConfirmationRequired = $condition;
 

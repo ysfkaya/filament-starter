@@ -18,7 +18,7 @@ class UsersChart extends LineChartWidget
 
     protected static ?string $pollingInterval = null;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getData(): array
     {

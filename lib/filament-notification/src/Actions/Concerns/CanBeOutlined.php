@@ -6,9 +6,9 @@ use Closure;
 
 trait CanBeOutlined
 {
-    protected bool | Closure $isOutlined = false;
+    protected bool|Closure $isOutlined = false;
 
-    public function outlined(bool | Closure $condition = true): static
+    public function outlined(bool|Closure $condition = true): static
     {
         $this->isOutlined = $condition;
 

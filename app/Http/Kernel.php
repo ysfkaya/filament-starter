@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
         'frontend' => [
             'web',
             'minify',
-            'cache.response'
+            'cache.response',
         ],
 
         'api' => [

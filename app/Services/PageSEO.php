@@ -21,9 +21,9 @@ class PageSEO implements SEOFriendly
      */
     public function loadSEO(SEOTools $seo)
     {
-        $description = data_get($this->page, 'seo.description');
+        $description = $this->page->getMeta('seo_description');
 
-        $title = data_get($this->page, 'seo.title') ?: $this->page->title;
+        $title = $this->page->getMeta('seo_title',$this->page->title);
 
         if ($title && $title !== $seo->metatags()->getDefaultTitle()) {
             $seo->setTitle($title);

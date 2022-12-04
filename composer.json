@@ -30,6 +30,7 @@
         "laravel/tinker": "^2.7",
         "mohamedsabil83/filament-forms-tinyeditor": "^1.6",
         "pxlrbt/filament-spotlight": "^0.3.5",
+        "rennokki/laravel-eloquent-query-cache": "^3.3",
         "saade/filament-laravel-log": "^1.1",
         "shuvroroy/filament-spatie-laravel-backup": "^1.2",
         "spatie/eloquent-sortable": "^4.0",

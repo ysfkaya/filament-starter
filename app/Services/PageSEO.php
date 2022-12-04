@@ -23,7 +23,7 @@ class PageSEO implements SEOFriendly
     {
         $description = $this->page->getMeta('seo_description');
 
-        $title = $this->page->getMeta('seo_title',$this->page->title);
+        $title = $this->page->getMeta('seo_title', $this->page->title);
 
         if ($title && $title !== $seo->metatags()->getDefaultTitle()) {
             $seo->setTitle($title);

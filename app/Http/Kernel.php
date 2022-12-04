@@ -37,7 +37,12 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
+        ],
+
+        'frontend' => [
+            'web',
+            'minify',
+            'cache.response'
         ],
 
         'api' => [
@@ -59,6 +64,9 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'cache.response' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
+        'cache.ignore' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
+        'minify' => \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,

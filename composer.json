@@ -36,6 +36,7 @@
         "spatie/laravel-data": "^2.0",
         "spatie/laravel-medialibrary": "^10.6",
         "spatie/laravel-missing-page-redirector": "^2.9",
+        "spatie/laravel-responsecache": "^7.4",
         "spatie/laravel-sitemap": "^6.2",
         "spatie/laravel-sluggable": "^3.4",
         "symfony/intl": "^6.1",

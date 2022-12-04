@@ -40,9 +40,11 @@ tasks:
     - deploy:prepare
     - deploy:vendors
     - artisan:storage:link
-    - artisan:view:cache
+    - artisan:cache:clear
     - artisan:config:cache
     - artisan:route:cache
+    - artisan:view:cache
+    - artisan:event:cache
     - artisan:migrate
     - deploy:publish
 
@@ -50,3 +52,5 @@ after:
   deploy:failed: deploy:unlock
   deploy:success:
     - artisan:queue:restart
+    - artisan:responsecache:clear
+    - artisan:sitemap:generate

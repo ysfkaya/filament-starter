@@ -28,6 +28,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.10",
         "mohamedsabil83/filament-forms-tinyeditor": "^1.6",
         "pxlrbt/filament-spotlight": "^0.3.5",
         "rennokki/laravel-eloquent-query-cache": "^3.3",

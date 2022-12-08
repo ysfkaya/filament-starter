@@ -1,8 +1,5 @@
-@props(['page'])
-<x-filament-fabricator::layouts.base :title="$page->title">
-    {{-- Header Here --}}
+@props(['page','media' => null])
 
-    <x-filament-fabricator::page-blocks :blocks="$page->blocks" />
-
-     {{-- Footer Here --}}
-</x-filament-fabricator::layouts.base>
+<x-layouts.app :$page :$media>
+    <x-filament-fabricator::page-blocks :blocks="$page->blocks" :$media />
+</x-layouts.app>

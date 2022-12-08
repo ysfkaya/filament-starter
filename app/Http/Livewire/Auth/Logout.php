@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class Logout extends Component
 {
-
     /**
      * Destroy an authenticated session.
      *

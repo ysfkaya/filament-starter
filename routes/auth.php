@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Livewire\Auth\ConfirmablePasswordController;
-use App\Http\Livewire\Auth\EmailVerificationNotificationController;
 use App\Http\Livewire\Auth\EmailVerificationPromptController;
 use App\Http\Livewire\Auth\LoginController;
 use App\Http\Livewire\Auth\NewPasswordController;

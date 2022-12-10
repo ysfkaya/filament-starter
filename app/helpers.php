@@ -11,6 +11,36 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\FileAdder;
 use Symfony\Component\Intl\Currencies;
 
+if (! function_exists('serializeMediaUuid')) {
+    function serializeMediaUuid(string|array $uuid): string|array
+    {
+        if (is_array($uuid)) {
+            return array_map(fn ($item) => serializeMediaUuid($item), $uuid);
+        }
+
+        if (strpos($uuid, 'media_uuid:') !== false) {
+            return $uuid;
+        }
+
+        return sprintf('media_uuid:%s', $uuid);
+    }
+}
+
+if (! function_exists('unserializeUuid')) {
+    function unserializeMediaUuid(string|array|null $uuid): string|array|null
+    {
+        if (is_null($uuid)) {
+            return null;
+        }
+
+        if (is_array($uuid)) {
+            return array_map(fn ($item) => unserializeMediaUuid($item), $uuid);
+        }
+
+        return str_replace('media_uuid:', '', $uuid);
+    }
+}
+
 if (! function_exists('add_media_from_disk')) {
     function add_media_from_disk(HasMedia $model, TemporaryUploadedFile $file): FileAdder
     {

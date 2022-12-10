@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostResource extends Resource
 {
@@ -32,7 +33,6 @@ class PostResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-
                 Forms\Components\Grid::make(3)
                     ->schema([
                         Forms\Components\Card::make([
@@ -140,6 +140,11 @@ class PostResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('meta');
     }
 
     public static function getPages(): array

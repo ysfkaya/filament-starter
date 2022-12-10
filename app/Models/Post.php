@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kolossal\Multiplex\HasMeta;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
@@ -18,7 +19,11 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Post extends Model implements HasMedia, Sortable
 {
-    use HasFactory, InteractsWithMedia, HasSlug, SortableTrait, HasMeta;
+    use HasFactory, InteractsWithMedia, HasSlug, SortableTrait, HasMeta, QueryCacheable;
+
+    protected static $flushCacheOnUpdate = true;
+
+    public $cacheFor = 3600;
 
     /**
      * The attributes that should be cast.
@@ -44,14 +49,9 @@ class Post extends Model implements HasMedia, Sortable
         return route('post', $this->slug);
     }
 
-    public function summary($limit = 40)
+    public function summary(int $limit = 25)
     {
-        $content = preg_replace('/<h[1-6]>.*?<\/h[1-6]>/', '', $this->body);
-
-        // Replace all within {} with nothing
-        $content = preg_replace('/{.*?}/', '', $content);
-
-        return str($content)->stripTags()->words($limit)->squish();
+        return summary_data($this, 'body', limit:$limit);
     }
 
     public function getSlugOptions(): SlugOptions
@@ -63,6 +63,6 @@ class Post extends Model implements HasMedia, Sortable
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('default')->singleFile();
+        $this->addMediaCollection('featured')->singleFile();
     }
 }

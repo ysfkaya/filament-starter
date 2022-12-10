@@ -25,8 +25,6 @@ trait HasTemporaryFiles
                 continue;
             }
 
-            $image = Str::after($image, 'section_file_upload:');
-
             /** @var TemporaryUploadedFile $storage */
             $storage = TemporaryUploadedFile::unserializeFromLivewireRequest($image);
 
@@ -43,7 +41,7 @@ trait HasTemporaryFiles
                     'uuid' => (string) Str::uuid(),
                 ])->save();
 
-                $uuid = $media->getAttributeValue('uuid');
+                $uuid = serializeMediaUuid($media->getAttributeValue('uuid'));
             }
 
             data_set($data, $index, $uuid);
@@ -58,8 +56,6 @@ trait HasTemporaryFiles
     {
         foreach ($data as $index => $value) {
             if (is_string($value)) {
-                $value = Str::after($value, 'section_file_upload:');
-
                 if (TemporaryUploadedFile::canUnserialize($value)) {
                     $indexes[] = trim($parent.'.'.$index, '.');
                 }

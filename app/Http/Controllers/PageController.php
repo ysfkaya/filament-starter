@@ -22,7 +22,7 @@ class PageController extends Controller
     {
         $slug ??= '/';
 
-        $page = Page::whereSlug($slug);
+        $page = Page::slug($slug);
 
         if (! $request->boolean('preview') || ! auth('admin')->check()) {
             $page->published();

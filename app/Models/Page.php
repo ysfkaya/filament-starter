@@ -50,6 +50,23 @@ class Page extends BasePage implements HasMedia
         return $builder->whereNotNull('published_at')->where('published_at', '<=', now());
     }
 
+    public function scopeSlug(Builder $builder, string $slug)
+    {
+        return $builder->where(function ($query) use ($slug) {
+            $slug = str($slug);
+
+            $slugStartWithSlash = $slug->start('/')->value();
+            $slugFinishWithSlash = $slug->finish('/')->value();
+            $slugWrap = $slug->wrap('/')->value();
+            $slug = str($slug)->trim('/')->value();
+
+            return $query->where('slug', $slug)
+                ->orWhere('slug', $slugStartWithSlash)
+                ->orWhere('slug', $slugFinishWithSlash)
+                ->orWhere('slug', $slugWrap);
+        });
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

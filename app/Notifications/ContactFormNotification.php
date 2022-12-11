@@ -44,14 +44,14 @@ class ContactFormNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New Contact Form - '. config('app.name'))
-            ->greeting('Hello ' . $notifiable->name . '!')
+            ->subject('New Contact Form - '.config('app.name'))
+            ->greeting('Hello '.$notifiable->name.'!')
             ->line('A new contact form has been submitted.')
-            ->line('Subject: ' . $this->form->subject) // @phpstan-ignore-line
-            ->line('Name: ' . $this->form->name) // @phpstan-ignore-line
-            ->line('E-mail: ' . $this->form->email) // @phpstan-ignore-line
-            ->line('Phone: ' . $this->form->phone) // @phpstan-ignore-line
-            ->line('Message: ' . $this->form->message) // @phpstan-ignore-line
+            ->line('Subject: '.$this->form->subject) // @phpstan-ignore-line
+            ->line('Name: '.$this->form->name) // @phpstan-ignore-line
+            ->line('E-mail: '.$this->form->email) // @phpstan-ignore-line
+            ->line('Phone: '.$this->form->phone) // @phpstan-ignore-line
+            ->line('Message: '.$this->form->message) // @phpstan-ignore-line
             ->action('Show Form', FormResource::getUrl(params: ['tableFilters' => ['id' => ['isActive' => $this->form->id]]]));
     }
 

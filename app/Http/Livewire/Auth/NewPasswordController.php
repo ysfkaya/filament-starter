@@ -35,11 +35,17 @@ class NewPasswordController extends Component
     public $password;
 
     /**
-     * The status of the password reset.
+     * The new password confirmation.
      *
      * @var string
      */
-    public $status;
+    public $password_confirmation;
+
+    public function mount(Request $request)
+    {
+        $this->token = $request->route('token');
+        $this->email = $request->email;
+    }
 
     /**
      * Handle an incoming new password request.

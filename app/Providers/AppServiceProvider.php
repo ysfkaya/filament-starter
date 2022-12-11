@@ -10,6 +10,7 @@ use Filament\Support\Components\ViewComponent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Vite;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +19,7 @@ use Saade\FilamentLaravelLog\Pages\ViewLog;
 use Spatie\MissingPageRedirector\MissingPageRouter as SpatieMissingPageRouter;
 use Spatie\MissingPageRedirector\Redirector\Redirector;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
+use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 
 /**
@@ -48,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::defaultView('pagination::default');
+        Paginator::defaultSimpleView('pagination::simple-default');
+
         Model::preventLazyLoading(! $this->app->isProduction());
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
         Model::unguard();
@@ -62,8 +67,26 @@ class AppServiceProvider extends ServiceProvider
     protected function registerMacros()
     {
         ViewComponent::macro('usesMeta', function () {
-            /** @var \Filament\Forms\Components\Field $instance */
+            /** @var \Filament\Forms\Components\Field|\Filament\Tables\Columns\Column $instance */
             $instance = $this;
+
+            if ($instance instanceof \Filament\Tables\Columns\Column) {
+                return $instance->getStateUsing(function ($column, $record) {
+                    if (blank($record)) {
+                        return;
+                    }
+
+                    if (! in_array(HasMeta::class, class_uses_recursive($record))) {
+                        return;
+                    }
+
+                    $meta = $record->pluckMeta();
+
+                    $key = $column->getName();
+
+                    return data_get($meta, $key);
+                });
+            }
 
             return $instance->afterStateHydrated(function ($component, $record) {
                 if (blank($record)) {
@@ -93,12 +116,15 @@ class AppServiceProvider extends ServiceProvider
             'post' => Models\Post::class,
             'post_category' => Models\PostCategory::class,
             'page' => Models\Page::class,
+            'form' => Models\Form::class,
         ]);
     }
 
     protected function bootFilamentServing(): void
     {
         Filament::serving(function () {
+            PageBuilder::configureUsing(fn ($builder) => $builder->collapsible()->collapsed(fn ($context) => in_array($context, ['edit', 'view'])));
+
             ViewLog::can(function ($admin) {
                 if (is_object($admin) && method_exists($admin, 'isDeveloper')) {
                     return $admin->isDeveloper();
@@ -118,9 +144,11 @@ class AppServiceProvider extends ServiceProvider
             PageResource::navigationGroup('CMS');
 
             FilamentFabricator::registerSchemaSlot('sidebar.after', [
-                \Filament\Forms\Components\DateTimePicker::make('published_at')
-                ->label('Publish Date')
-                ->rules(['nullable', 'date']),
+                \Filament\Forms\Components\Card::make([
+                    \Filament\Forms\Components\DateTimePicker::make('published_at')
+                    ->label('Publish Date')
+                    ->rules(['nullable', 'date']),
+                ]),
             ]);
         });
     }
@@ -143,6 +171,12 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('user', function ($expression) {
             return "<?php echo data_get(auth()->user(),$expression); ?>";
+        });
+
+        Blade::directive('replace', function ($expression) {
+            [$subject,$search,$replace] = array_map('trim', explode(',', $expression));
+
+            return "<?php echo e(Str::replace($search,$replace,$subject)); ?>";
         });
     }
 }

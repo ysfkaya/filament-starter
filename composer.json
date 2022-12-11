@@ -30,6 +30,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "mohamedsabil83/filament-forms-tinyeditor": "^1.6",
+        "propaganistas/laravel-phone": "^4.4",
         "pxlrbt/filament-spotlight": "^0.3.5",
         "rennokki/laravel-eloquent-query-cache": "^3.3",
         "saade/filament-laravel-log": "^1.1",
@@ -44,6 +45,7 @@
         "symfony/intl": "^6.1",
         "ysfkaya/filament-menu": "*",
         "ysfkaya/filament-notification": "*",
+        "ysfkaya/filament-phone-input": "^1.2",
         "z3d0x/filament-fabricator": "^1.0"
     },
     "require-dev": {

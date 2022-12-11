@@ -6,6 +6,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable implements FilamentUser
@@ -70,6 +71,11 @@ class Admin extends Authenticatable implements FilamentUser
         return $builder->whereDoesntHave('roles', function ($query) {
             $query->whereIn('name', self::superRoles());
         });
+    }
+
+    public static function notification(Notification $notification)
+    {
+        return self::each(fn (Admin $admin) => $admin->notify($notification), 5);
     }
 
     public function isSuper(): bool

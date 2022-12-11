@@ -73,7 +73,7 @@
             $action = $this->getMountedNotificationAction();
         @endphp
 
-        <x-tables::modal :id="\Illuminate\Support\Str::of(static::class)->replace('\\', '\\\\') . '-action'" :width="$action?->getModalWidth()" display-classes="block">
+        <x-tables::modal displayClasses="block" :id="\Illuminate\Support\Str::of(static::class)->replace('\\', '\\\\') . '-action'" :width="$action?->getModalWidth()" display-classes="block">
             @if ($action)
                 @if ($action->isModalCentered())
                     <x-slot name="heading">

@@ -2,6 +2,7 @@
 import:
   - recipe/laravel.php
   - contrib/php-fpm.php
+  - deployer/helpers.php
 
 config:
   application: "{site_name}"

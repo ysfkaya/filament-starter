@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\QueryCacheable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use Kolossal\Multiplex\HasMeta;
@@ -17,7 +18,7 @@ use Z3d0X\FilamentFabricator\Models\Page as BasePage;
  */
 class Page extends BasePage implements HasMedia
 {
-    use HasSlug, InteractsWithMedia, HasMeta;
+    use HasSlug, InteractsWithMedia, HasMeta, QueryCacheable;
 
     /**
      * The attributes that should be cast.

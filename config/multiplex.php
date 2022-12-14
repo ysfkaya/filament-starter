@@ -4,7 +4,7 @@ return [
     /**
      * Model to use for Meta.
      */
-    'model' => Kolossal\Multiplex\Meta::class,
+    'model' => \App\Models\Meta::class,
 
     /**
      * Determine wethere packages migrations should be loaded automatically.

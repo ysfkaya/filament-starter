@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Traits\QueryCacheable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kolossal\Multiplex\HasMeta;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
@@ -20,10 +20,6 @@ use Spatie\Sluggable\SlugOptions;
 class Post extends Model implements HasMedia, Sortable
 {
     use HasFactory, InteractsWithMedia, HasSlug, SortableTrait, HasMeta, QueryCacheable;
-
-    protected static $flushCacheOnUpdate = true;
-
-    public $cacheFor = 3600;
 
     /**
      * The attributes that should be cast.

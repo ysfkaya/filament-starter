@@ -20,9 +20,14 @@ class CacheBuilder extends Builder
         // @phpstan-ignore-next-line
         $name = $this->connection->getName();
 
-        // Deletes DateTime objects.
-        // Because some DateTime objects return real-time data and prevent caching.
-        $bindings = array_filter($this->getBindings(), fn ($binding) => ! $binding instanceof DateTime);
+        $bindings = array_filter($this->getBindings(), function ($binding) {
+            if ($binding instanceof DateTime) {
+                // Ignore the real-time bindings.
+                return ! now()->isSameUnit('minute', $binding);
+            }
+
+            return true;
+        });
 
         // Count has no Sql, that's why it can't be used ->toSql()
         if ($method === 'count') {

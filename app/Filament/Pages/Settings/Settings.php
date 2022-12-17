@@ -2,10 +2,9 @@
 
 namespace App\Filament\Pages\Settings;
 
-use App\Overrides\Filament\Forms\Components\SettingsFileUpload;
 use App\Overrides\Filament\Pages\SettingsPage;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components;
 
 class Settings extends SettingsPage
 {
@@ -21,21 +20,29 @@ class Settings extends SettingsPage
 
     protected static ?string $navigationLabel = 'Settings';
 
-    public function group(): string
-    {
-        return 'general';
-    }
-
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('site_title')->label('Site Title')->required(),
-            TextInput::make('site_description')->label('Site Description')->required(),
+            Components\Tabs::make('Settings')
+                ->schema([
+                    Components\Tabs\Tab::make('Site')
+                        ->schema([
+                            Components\TextInput::make('site.title')->label('Title'),
+                            Components\TextInput::make('site.description')->label('Description'),
 
-            TextInput::make('site_copyright')->label('Site Copyright'),
-
-            SettingsFileUpload::make('site_logo')->label('Site Logo')->image(),
-            SettingsFileUpload::make('site_favicon')->label('Site Favicon')->image(),
+                            Components\TextInput::make('site.copyright')
+                            ->label('Copyright')
+                            ->placeholder('© {date} site.com'),
+                        ]),
+                    Components\Tabs\Tab::make('Social Accounts')
+                        ->schema([
+                            Components\TextInput::make('social.facebook')->label('Facebook')->url(),
+                            Components\TextInput::make('social.twitter')->label('Twitter')->url(),
+                            Components\TextInput::make('social.instagram')->label('Instagram')->url(),
+                            Components\TextInput::make('social.youtube')->label('Youtube')->url(),
+                            Components\TextInput::make('social.linkedin')->label('Linkedin')->url(),
+                        ]),
+                ]),
         ];
     }
 }

@@ -20,15 +20,10 @@ class Redirects extends SettingsPage
 
     protected static ?string $slug = 'system/redirects';
 
-    public function group(): string
-    {
-        return 'redirects';
-    }
-
     protected function getFormSchema(): array
     {
         return [
-            Components\Repeater::make('urls')
+            Components\Repeater::make('redirects.urls')
                 ->columnSpan('full')
                 ->collapsible()
                 ->schema([

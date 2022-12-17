@@ -8,6 +8,7 @@ use Filament\Pages\Actions\Action;
 use Filament\Pages\Concerns;
 use Filament\Pages\Contracts\HasFormActions;
 use Filament\Pages\Page;
+use Illuminate\Support\Arr;
 
 /**
  * @property ComponentContainer $form
@@ -22,8 +23,6 @@ abstract class SettingsPage extends Page implements HasFormActions
 
     public $data;
 
-    abstract public function group(): string;
-
     public function mount(): void
     {
         $this->fillForm();
@@ -33,7 +32,7 @@ abstract class SettingsPage extends Page implements HasFormActions
     {
         $this->callHook('beforeFill');
 
-        $data = $this->mutateFormDataBeforeFill(data_get(setting()->all(), $this->group(), []));
+        $data = $this->mutateFormDataBeforeFill(setting()->all());
 
         $this->form->fill($data);
 
@@ -55,16 +54,9 @@ abstract class SettingsPage extends Page implements HasFormActions
 
         $data = $this->mutateFormDataBeforeSave($data);
 
-        // Starts with the group name each of the keys in the data
-        $data = collect($data)->mapWithKeys(function ($value, $key) {
-            $key = str($key)->start($this->group().'.')->value();
-
-            if (is_array($value) && empty($value)) {
-                $value = null;
-            }
-
-            return [$key => $value];
-        })->toArray();
+        $data = collect(Arr::dot($data))->mapWithKeys(fn ($value, $key) => [
+            $key => filled($value) ? (is_array($value) ? json_encode($value) : $value) : null,
+        ])->toArray();
 
         $this->callHook('beforeSave');
 

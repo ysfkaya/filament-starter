@@ -80,14 +80,14 @@ return [
     |
     */
     'override' => [
-        'seotools.meta.defaults.title' => 'general.site_title',
-        'seotools.meta.defaults.description' => 'general.site_description',
+        'seotools.meta.defaults.title' => 'site.title',
+        'seotools.meta.defaults.description' => 'site.description',
 
-        'seotools.opengraph.defaults.title' => 'general.site_title',
-        'seotools.opengraph.defaults.description' => 'general.site_description',
+        'seotools.opengraph.defaults.title' => 'site.title',
+        'seotools.opengraph.defaults.description' => 'site.description',
 
-        'seotools.json-ld.defaults.title' => 'general.site_title',
-        'seotools.json-ld.defaults.description' => 'general.site_description',
+        'seotools.json-ld.defaults.title' => 'site.title',
+        'seotools.json-ld.defaults.description' => 'site.description',
     ],
 
     /*

@@ -24,19 +24,14 @@ class Post extends SettingsPage
 
     protected ?string $heading = 'Post Settings';
 
-    public function group(): string
-    {
-        return 'post';
-    }
-
     protected function getFormSchema(): array
     {
         return [
             Forms\Components\Section::make('SEO')
                 ->schema([
-                    Forms\Components\TextInput::make('seo.title')->label('Title'),
+                    Forms\Components\TextInput::make('post.seo.title')->label('Title'),
 
-                    Forms\Components\Textarea::make('seo.description')->label('Description'),
+                    Forms\Components\Textarea::make('post.seo.description')->label('Description'),
                 ]),
         ];
     }

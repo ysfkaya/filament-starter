@@ -3,7 +3,6 @@
 namespace App\Overrides\Filament\Forms\Components;
 
 use App\DTO\Image;
-use App\Overrides\Filament\Pages\SettingsPage;
 use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
@@ -65,7 +64,7 @@ final class SettingsFileUpload extends FileUpload
                 $component->getDiskName(),
             );
 
-            $key = $component->settingKey();
+            $key = $component->getName();
 
             $component->removeOldFile();
 
@@ -85,17 +84,9 @@ final class SettingsFileUpload extends FileUpload
         });
     }
 
-    public function settingKey()
-    {
-        /** @var SettingsPage $livewire */
-        $livewire = $this->getLivewire();
-
-        return "{$livewire->group()}.{$this->getName()}";
-    }
-
     public function removeOldFile()
     {
-        $key = $this->settingKey();
+        $key = $this->getName();
 
         // Delete the old file if it exists.
         if (filled($payload = setting($key))) {

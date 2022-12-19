@@ -173,6 +173,10 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo data_get(auth()->user(),$expression); ?>";
         });
 
+        Blade::directive('money', function ($expression) {
+            return "<?php echo formatMoney($expression); ?>";
+        });
+
         Blade::directive('replace', function ($expression) {
             [$subject,$search,$replace] = array_map('trim', explode(',', $expression));
 

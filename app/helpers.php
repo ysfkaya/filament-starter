@@ -81,7 +81,7 @@ if (! function_exists('formatMoney')) {
      * @param  Money  $money
      * @return string
      */
-    function formatMoney(Money $money, $locale = null)
+    function formatMoney(Money $money, ?string $locale = null)
     {
         $locale = $locale ?? config('app.locale');
 

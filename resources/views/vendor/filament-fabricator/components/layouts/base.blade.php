@@ -23,7 +23,7 @@
         }
     </style>
 
-    {{-- @vite('resources/css/app.css') --}}
+    @vite('resources/css/app.css')
 
     {{ $styles ?? '' }}
 
@@ -38,6 +38,21 @@
     @vite('resources/js/app.js')
 
     {{ $scripts ?? '' }}
+
+    <script>
+        const oldFetch = window.fetch
+
+        window.fetch = async (url, options) => {
+            let response = await oldFetch(url, options)
+            const isLivewireRequest = options && options.headers && options.headers['X-Livewire'] === true;
+            if (isLivewireRequest && response.redirected) {
+                setTimeout(() => {
+                    window.location.href = response.url;
+                }, 50);
+            }
+            return response;
+        }
+    </script>
 
     @setting('general.site_footer')
 </body>

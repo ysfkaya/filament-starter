@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Auth;
 use App\Providers\RouteServiceProvider;
 use Livewire\Component;
 
-class EmailVerificationNotification extends Component
+class EmailVerificationNotificationController extends Component
 {
     /**
      * The status of the email verification notification.

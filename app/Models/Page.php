@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\HasMeta;
 use App\Traits\QueryCacheable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
-use Kolossal\Multiplex\HasMeta;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;

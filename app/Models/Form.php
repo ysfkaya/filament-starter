@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Enums\FormType;
+use App\Traits\HasMeta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Kolossal\Multiplex\HasMeta;
 
 class Form extends Model
 {

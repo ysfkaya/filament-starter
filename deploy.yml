@@ -47,6 +47,8 @@ tasks:
     - artisan:view:cache
     - artisan:event:cache
     - artisan:migrate
+    - yarn:install
+    - yarn:build
     - deploy:publish
 
 after:
